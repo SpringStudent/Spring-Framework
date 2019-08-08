@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <bean class="org.springframework.study.day10.String2DateConverter"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="a" class="org.springframework.study.day10.HaveDateBean">
+        <property name="date" value="2019-12-12"/>
+    </bean>
+
+
+</beans>

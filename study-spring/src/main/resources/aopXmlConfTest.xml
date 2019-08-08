@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="aspectBean" class="org.springframework.study.day11.AspectBean"/>
+    <bean id="explictAspect" class="org.springframework.study.day11.ExplictAspect"/>
+
+    <aop:config>
+        <!--切入点-->
+        <aop:pointcut expression="execution(* *.aspectTest(..))" id="p1"/>
+        <!-- 配置aop操作中的切面 -->
+        <aop:aspect ref="explictAspect" order="0">
+            <aop:around method="aroundAdvice" pointcut-ref="p1"/>
+            <aop:before method="beforeAdvice" pointcut-ref="p1"/>
+            <aop:after method="afterAdvice" pointcut-ref="p1"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!-- 数据库基本信息配置 -->
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url"
+                  value="jdbc:mysql://localhost:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxActive" value="300"/>
+        <property name="maxIdle" value="2"/>
+        <property name="minIdle" value="1"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="druidDataSource"/>
+    </bean>
+
+    <bean id="tbTest2Dao" class="org.springframework.study.day17.dao.TbTest2DaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="tbTest3Dao" class="org.springframework.study.day17.dao.TbTest3DaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="tbTest2Service" class="org.springframework.study.day17.service.TbTest2ServiceImpl">
+        <property name="tbTest2Dao" ref="tbTest2Dao"/>
+    </bean>
+
+    <bean id="tbTest3Service" class="org.springframework.study.day17.service.TbTest3ServiceImpl">
+        <property name="tbTest3Dao" ref="tbTest3Dao"/>
+    </bean>
+
+    <bean id="testPropagationService" class="org.springframework.study.day17.service.TestPropagationServiceImpl">
+        <property name="tbTest2Dao" ref="tbTest2Dao"/>
+        <property name="tbTest3Dao" ref="tbTest3Dao"/>
+        <property name="tbTest2Service" ref="tbTest2Service"/>
+        <property name="tbTest3Service" ref="tbTest3Service"/>
+    </bean>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="druidDataSource"/>
+    </bean>
+
+    <!--开启tx注解-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>

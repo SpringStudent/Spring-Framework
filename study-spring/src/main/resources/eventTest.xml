@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="anComplexBean" class="org.springframework.study.day06.AnComplexBean" autowire="byType">
+        <property name="attr1" value="1024"/>
+        <property name="attr4" ref="attrBean4"/>
+        <constructor-arg index="0">
+            <map>
+                <entry key="heihei" value-ref="attrBean3"/>
+            </map>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <list>
+                <ref bean="attrBean"/>
+                <ref bean="attrBean2"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    <bean id="attrBean" class="org.springframework.study.day06.AttrBean">
+        <constructor-arg index="0" value="age"/>
+        <constructor-arg index="1" value="22"/>
+    </bean>
+    <bean id="attrBean2" class="org.springframework.study.day06.AttrBean">
+        <constructor-arg index="0" value="name"/>
+        <constructor-arg index="1" value="wang"/>
+    </bean>
+
+    <bean id="attrBean3" class="org.springframework.study.day06.AttrBean">
+        <constructor-arg index="0" value="email"/>
+        <constructor-arg index="1" value="2267431887@qq.com"/>
+    </bean>
+
+    <bean id="attrBean4" class="org.springframework.study.day06.AttrBean">
+        <constructor-arg index="0" value="career"/>
+        <constructor-arg index="1" value="java"/>
+    </bean>
+
+    <bean id="attrINf" class="org.springframework.study.day06.AttrInfo">
+        <property name="str" value="{asd:mapa,jsd:halou}"/>
+    </bean>
+
+</beans>
