@@ -25,7 +25,6 @@ public class UserController  extends AbstractController {
         u2.setUsername("周宁");
         users.add(u1);
         users.add(u2);
-
         return new ModelAndView("userlist","users",users);
     }
 }

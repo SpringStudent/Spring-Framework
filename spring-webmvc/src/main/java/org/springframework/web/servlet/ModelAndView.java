@@ -135,8 +135,7 @@ public class ModelAndView {
 
 	/**
 	 * Create a new ModelAndView given a view name, model, and HTTP status.
-	 * @param viewName name of the View to render, to be resolved
-	 * by the DispatcherServlet's ViewResolver
+	 * @param viewName 要呈现的视图名称，将由DispatcherServlet's ViewResolver解析
 	 * @param model Map of model names (Strings) to model objects
 	 * (Objects). Model entries may not be {@code null}, but the
 	 * model Map may be {@code null} if there is no model data.
@@ -154,10 +153,9 @@ public class ModelAndView {
 
 	/**
 	 * Convenient constructor to take a single model object.
-	 * @param viewName name of the View to render, to be resolved
-	 * by the DispatcherServlet's ViewResolver
-	 * @param modelName name of the single entry in the model
-	 * @param modelObject the single model object
+	 * @param viewName 要呈现的视图名称，将由DispatcherServlet's ViewResolver解析
+	 * @param modelName 传递给视图的模型对象名称，可以通过该名称访问咱们的数据
+	 * @param modelObject 传递给视图的模型对象的内容
 	 */
 	public ModelAndView(String viewName, String modelName, Object modelObject) {
 		this.view = viewName;

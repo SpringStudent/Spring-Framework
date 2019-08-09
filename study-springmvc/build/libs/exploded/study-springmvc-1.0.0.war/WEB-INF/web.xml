@@ -7,6 +7,9 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>org.springframework.studymvc.servlet.UserServletContextListener</listener-class>
+    </listener>
     <!--配置spring核心的配置文件谢谢-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -15,7 +18,7 @@
 
     <!--SpringMVC的前端控制器;spring使用该类拦截web请求做处理-->
     <servlet>
-        <servlet-name>Springmvc</servlet-name>
+        <servlet-name>springmvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
@@ -24,8 +27,18 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Springmvc</servlet-name>
+        <servlet-name>springmvc</servlet-name>
         <url-pattern>*.htm</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>userServlet</servlet-name>
+        <servlet-class>org.springframework.studymvc.servlet.UserServlet</servlet-class>
+
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userServlet</servlet-name>
+        <url-pattern>/user</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
