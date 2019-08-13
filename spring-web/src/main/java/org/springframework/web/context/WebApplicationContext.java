@@ -24,17 +24,17 @@ import org.springframework.context.ApplicationContext;
  * Interface to provide configuration for a web application. This is read-only while
  * the application is running, but may be reloaded if the implementation supports this.
  *
- * <p>This interface adds a {@code getServletContext()} method to the generic
- * ApplicationContext interface, and defines a well-known application attribute name
- * that the root context must be bound to in the bootstrap process.
+ * 用于为Web应用程序提供配置的界面。 这在应用程序运行时是只读的，但如果实现支持，则可以重新加载
  *
- * <p>Like generic application contexts, web application contexts are hierarchical.
- * There is a single root context per application, while each servlet in the application
- * (including a dispatcher servlet in the MVC framework) has its own child context.
+ * <p>此接口将{@code getServletContext（）}方法添加到通用ApplicationContext接口，并添加一些大家都知道的
+ * 根上下文必须在引导过程中必须绑定值到的属性名称
  *
- * <p>In addition to standard application context lifecycle capabilities,
- * WebApplicationContext implementations need to detect {@link ServletContextAware}
- * beans and invoke the {@code setServletContext} method accordingly.
+ *
+ * <p>与通用应用程序上下文一样，Web应用程序上下文是分层的.
+ * 每个应用程序都有一个根上下文，而应用程序中的每个servlet（包括MVC框架中的调度程序servlet）都有自己的子上下文
+ *
+ * <p>除了标准的应用程序上下文生命周期功能外，
+ * WebApplicationContext实现需要检测{@link ServletContextAware} bean并相应地调用{@code setServletContext}方法
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
@@ -103,7 +103,7 @@ public interface WebApplicationContext extends ApplicationContext {
 
 
 	/**
-	 * Return the standard Servlet API ServletContext for this application.
+	 * 返回此应用程序的标准Servlet API ServletContext。
 	 * <p>Also available for a Portlet application, in addition to the PortletContext.
 	 */
 	ServletContext getServletContext();

@@ -271,9 +271,13 @@ public abstract class WebApplicationContextUtils {
 	 * Replace {@code Servlet}-based {@link StubPropertySource stub property sources} with
 	 * actual instances populated with the given {@code servletContext} and
 	 * {@code servletConfig} objects.
+	 *
+	 * 将基于{@code Servlet}的{@link StubPropertySource}存根属性源
+	 * 替换为使用给定的{@code servletContext}和{@code servletConfig}对象填充的实际实例。
 	 * <p>This method is idempotent with respect to the fact it may be called any number
-	 * of times but will perform replacement of stub property sources with their
-	 * corresponding actual property sources once and only once.
+	 * 	 * of times but will perform replacement of stub property sources with their
+	 * 	 * corresponding actual property sources once and only once.
+	 * 该方法对于可以被调用任意次数的事实是幂等的，但是将用它们对应的实际属性源替换存根属性源仅一次。
 	 * @param propertySources the {@link MutablePropertySources} to initialize (must not
 	 * be {@code null})
 	 * @param servletContext the current {@link ServletContext} (ignored if {@code null}

@@ -33,18 +33,12 @@ import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.context.ServletContextAware;
 
 /**
- * {@link org.springframework.context.support.AbstractRefreshableApplicationContext}
- * subclass which implements the
- * {@link org.springframework.web.context.ConfigurableWebApplicationContext}
- * interface for web environments. Provides a "configLocations" property,
- * to be populated through the ConfigurableWebApplicationContext interface
- * on web application startup.
+ * @link org.springframework.context.support.AbstractRefreshableApplicationContext}子类，
+ * 用于为Web环境实现{@link org.springframework.web.context.ConfigurableWebApplicationContext}接口。
+ * 提供“configLocations”属性，通过Web应用程序启动时的ConfigurableWebApplicationContext接口填充
  *
- * <p>This class is as easy to subclass as AbstractRefreshableApplicationContext:
- * All you need to implements is the {@link #loadBeanDefinitions} method;
- * see the superclass javadoc for details. Note that implementations are supposed
- * to load bean definitions from the files specified by the locations returned
- * by the {@link #getConfigLocations} method.
+ * <p>此类与AbstractRefreshableApplicationContext一样易于子类化：您需要实现的只是{@link #loadBeanDefinitions}方法;
+ * 有关详细信息，请参阅超类javadoc. 请注意，实现应该从{@link #getConfigLocations}方法返回的位置指定的文件中加载bean定义
  *
  * <p>Interprets resource paths as servlet context resources, i.e. as paths beneath
  * the web application root. Absolute paths, e.g. for files outside the web app root,

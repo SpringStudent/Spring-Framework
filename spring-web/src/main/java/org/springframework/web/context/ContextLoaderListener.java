@@ -20,16 +20,16 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
- * Bootstrap listener to start up and shut down Spring's root {@link WebApplicationContext}.
- * Simply delegates to {@link ContextLoader} as well as to {@link ContextCleanupListener}.
  *
- * <p>This listener should be registered after {@link org.springframework.web.util.Log4jConfigListener}
- * in {@code web.xml}, if the latter is used.
+ * 启动和停止Spring根{@link WebApplicationContext}的监听器
+ * 只需委托{@link ContextLoader}以及{@link ContextCleanupListener}。
  *
- * <p>As of Spring 3.1, {@code ContextLoaderListener} supports injecting the root web
- * application context via the {@link #ContextLoaderListener(WebApplicationContext)}
- * constructor, allowing for programmatic configuration in Servlet 3.0+ environments.
- * See {@link org.springframework.web.WebApplicationInitializer} for usage examples.
+ * <p>如果使用后者，则应在{@code web.xml}中{@link org.springframework.web.util.Log4jConfigListener}
+ * 后注册此监听器
+ *
+ * <p>从Spring 3.1开始，{@code ContextLoaderListener}支持通过{@link #ContextLoaderListener（WebApplicationContext）}
+ * 构造函数注入根Web应用程序上下文，允许在Servlet 3.0+环境中进行编程配置
+ * 有关用法示例，请参阅{@link org.springframework.web.WebApplicationInitializer}。
  *
  * @author Juergen Hoeller
  * @author Chris Beams
@@ -109,7 +109,7 @@ public class ContextLoaderListener extends ContextLoader implements ServletConte
 
 
 	/**
-	 * Close the root web application context.
+	 * 关闭根Web应用程序上下文
 	 */
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {

@@ -19,16 +19,14 @@ package org.springframework.core.env;
 import org.springframework.util.ObjectUtils;
 
 /**
- * A {@link PropertySource} implementation capable of interrogating its
- * underlying source object to enumerate all possible property name/value
- * pairs. Exposes the {@link #getPropertyNames()} method to allow callers
- * to introspect available properties without having to access the underlying
- * source object. This also facilitates a more efficient implementation of
- * {@link #containsProperty(String)}, in that it can call {@link #getPropertyNames()}
- * and iterate through the returned array rather than attempting a call to
- * {@link #getProperty(String)} which may be more expensive. Implementations may
- * consider caching the result of {@link #getPropertyNames()} to fully exploit this
- * performance opportunity.
+ * 一个{@link PropertySource}实现，能够查询它
+ *   底层源对象，用于枚举所有可能的属性名称/值对。
+ * 公开{@link #getPropertyNames（）}方法，
+ * 允许调用者内省可用属性，而无需访问底层源对象。
+ * 这也有助于更有效地实现{@link #containsProperty（String）}，因为它可以调用{@link #getPropertyNames（）}
+ * 并遍历返回的数组，而不是尝试调用
+ * {@link #getProperty（String）}这可能更贵。 实施可能
+ * 考虑缓存{@link #getPropertyNames（）}的结果，以充分利用此性能机会
  *
  * <p>Most framework-provided {@code PropertySource} implementations are enumerable;
  * a counter-example would be {@code JndiPropertySource} where, due to the

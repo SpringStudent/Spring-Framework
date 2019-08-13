@@ -111,6 +111,7 @@ public class SessionScopeTests {
 		assertEquals(1, count.intValue());
 
 		// should re-propagate updated attribute
+		//应该重新传播更新的属性
 		requestAttributes.requestCompleted();
 		assertEquals(session.getAttribute(name), bean);
 		assertEquals(2, count.intValue());

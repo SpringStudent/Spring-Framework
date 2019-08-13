@@ -22,14 +22,16 @@ import javax.servlet.ServletContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
- * Interface to be implemented by configurable web application contexts.
- * Supported by {@link ContextLoader} and
- * {@link org.springframework.web.servlet.FrameworkServlet}.
+ * 由可配置的Web应用程序上下文实现的接口。
+ * 由{@link ContextLoader}和{@link org.springframework.web.servlet.FrameworkServlet}提供支持.
  *
  * <p>Note: The setters of this interface need to be called before an
  * invocation of the {@link #refresh} method inherited from
  * {@link org.springframework.context.ConfigurableApplicationContext}.
  * They do not cause an initialization of the context on their own.
+ *
+ * <p>注意：在调用继承自{@link org.springframework.context.ConfigurableApplicationContext}
+ * 的{@link #refresh}方法之前，需要调用此接口的setter。它们不会导致自己初始化上下文
  *
  * @author Juergen Hoeller
  * @since 05.12.2003
@@ -53,8 +55,11 @@ public interface ConfigurableWebApplicationContext extends WebApplicationContext
 
 	/**
 	 * Set the ServletContext for this web application context.
+	 *
+	 * 为此Web应用程序上下文设置ServletContext。
 	 * <p>Does not cause an initialization of the context: refresh needs to be
 	 * called after the setting of all configuration properties.
+	 * 不会导致上下文初始化：refresh需要在设置所有配置属性后调用
 	 * @see #refresh()
 	 */
 	void setServletContext(ServletContext servletContext);
@@ -62,19 +67,21 @@ public interface ConfigurableWebApplicationContext extends WebApplicationContext
 	/**
 	 * Set the ServletConfig for this web application context.
 	 * Only called for a WebApplicationContext that belongs to a specific Servlet.
+	 *
+	 * 为此Web应用程序上下文设置ServletConfig。
 	 * @see #refresh()
 	 */
 	void setServletConfig(ServletConfig servletConfig);
 
 	/**
 	 * Return the ServletConfig for this web application context, if any.
+	 *
 	 */
 	ServletConfig getServletConfig();
 
 	/**
-	 * Set the namespace for this web application context,
-	 * to be used for building a default context config location.
-	 * The root web application context does not have a namespace.
+	 * 设置此Web应用程序上下文的命名空间，用于构建默认上下文配置位置。
+	 * 根Web应用程序上下文没有命名空间。
 	 */
 	void setNamespace(String namespace);
 
@@ -84,10 +91,9 @@ public interface ConfigurableWebApplicationContext extends WebApplicationContext
 	String getNamespace();
 
 	/**
-	 * Set the config locations for this web application context in init-param style,
-	 * i.e. with distinct locations separated by commas, semicolons or whitespace.
-	 * <p>If not set, the implementation is supposed to use a default for the
-	 * given namespace or the root web application context, as appropriate.
+	 * 以init-param样式设置此Web应用程序上下文的配置位置，即使用逗号，分号或空格分隔的不同位置
+	 * <p>如果没有设置，则实现应该使用默认值
+	 * 给定的命名空间或根Web应用程序上下文，视情况而定
 	 */
 	void setConfigLocation(String configLocation);
 

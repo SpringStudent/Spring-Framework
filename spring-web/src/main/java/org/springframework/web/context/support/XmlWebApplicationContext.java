@@ -24,32 +24,23 @@ import org.springframework.beans.factory.xml.ResourceEntityResolver;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 
 /**
- * {@link org.springframework.web.context.WebApplicationContext} implementation
- * which takes its configuration from XML documents, understood by an
- * {@link org.springframework.beans.factory.xml.XmlBeanDefinitionReader}.
- * This is essentially the equivalent of
- * {@link org.springframework.context.support.GenericXmlApplicationContext}
- * for a web environment.
+ * {@link org.springframework.web.context.WebApplicationContext}实现，
+ * 它从XML文档获取其配置，由{@link org.springframework.beans.factory.xml.XmlBeanDefinitionReader}解析xml。
+ * 对于web环境它基本相当于{@link org.springframework.context.support.GenericXmlApplicationContext}
  *
- * <p>By default, the configuration will be taken from "/WEB-INF/applicationContext.xml"
- * for the root context, and "/WEB-INF/test-servlet.xml" for a context with the namespace
- * "test-servlet" (like for a DispatcherServlet instance with the servlet-name "test").
+ * <p>默认的,对于根上下文的配置将会取自/WEB-INF/applicationContext.xml;如果命名空间为"test-servlet"
+ * 则默认的配置文件将会是"/WEB-INF/test-servlet.xml"(比如一个带有servlet-name“test”的DispatcherServlet实例)
  *
- * <p>The config location defaults can be overridden via the "contextConfigLocation"
- * context-param of {@link org.springframework.web.context.ContextLoader} and servlet
- * init-param of {@link org.springframework.web.servlet.FrameworkServlet}. Config locations
- * can either denote concrete files like "/WEB-INF/context.xml" or Ant-style patterns
- * like "/WEB-INF/*-context.xml" (see {@link org.springframework.util.PathMatcher}
- * javadoc for pattern details).
+ * <p>配置位置默认值可以通过{@link org.springframework.web.context.ContextLoader}的“contextConfigLocation”
+ * context-param和{@link org.springframework.web.servlet.FrameworkServlet}的servletinit-param覆盖。
+ * 配置位置可以使用类似模糊匹配文件名的方式匹配谢谢
  *
- * <p>Note: In case of multiple config locations, later bean definitions will
- * override ones defined in earlier loaded files. This can be leveraged to
- * deliberately override certain bean definitions via an extra XML file.
+ * <p>注意：如果有多个配置位置，后面的bean定义会
+ * 覆盖先前加载的文件中定义的那些. 这可以用来通过额外的XML文件故意覆盖某些bean定义。
  *
- * <p><b>For a WebApplicationContext that reads in a different bean definition format,
- * create an analogous subclass of {@link AbstractRefreshableWebApplicationContext}.</b>
- * Such a context implementation can be specified as "contextClass" context-param
- * for ContextLoader or "contextClass" init-param for FrameworkServlet.
+ * <p><b对于读取不同bean定义格式的WebApplicationContext,
+ * 创建{@link AbstractRefreshableWebApplicationContext}的类似子类。</ b>
+ * 这样的上下文实现可以指定为ContextLoader的“contextClass”context-param或FrameworkServlet的“contextClass”init-param
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

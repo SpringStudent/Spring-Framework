@@ -16,6 +16,11 @@
         <param-value>classpath*:**/applicationContext*.xml</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>contextInitializerClasses</param-name>
+        <param-value>org.springframework.studymvc.acini.MyApplicationContextInitializer</param-value>
+    </context-param>
+
     <!--SpringMVC的前端控制器;spring使用该类拦截web请求做处理-->
     <servlet>
         <servlet-name>springmvc</servlet-name>
