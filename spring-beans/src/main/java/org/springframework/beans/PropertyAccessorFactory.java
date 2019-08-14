@@ -27,8 +27,7 @@ package org.springframework.beans;
 public abstract class PropertyAccessorFactory {
 
 	/**
-	 * Obtain a BeanWrapper for the given target object,
-	 * accessing properties in JavaBeans style.
+	 * 获取给定目标对象的BeanWrapper，访问JavaBeans样式的属性
 	 * @param target the target object to wrap
 	 * @return the property accessor
 	 * @see BeanWrapperImpl

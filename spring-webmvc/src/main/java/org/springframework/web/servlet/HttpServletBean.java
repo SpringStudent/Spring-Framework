@@ -51,14 +51,24 @@ import org.springframework.web.context.support.StandardServletEnvironment;
  * its config parameters ({@code init-param} entries within the
  * {@code servlet} tag in {@code web.xml}) as bean properties.
  *
+ * 处理{@link javax.servlet.http.HttpServlet}的简单扩展
+ * 扩展配置参数当做bean属性({@code init-param}条目
+ * {@code web.xml}中的{@code servlet})
+ *
+ *
  * <p>A handy superclass for any type of servlet. Type conversion of config
  * parameters is automatic, with the corresponding setter method getting
  * invoked with the converted value. It is also possible for subclasses to
  * specify required properties. Parameters without matching bean property
  * setter will simply be ignored.
  *
+ * 适用于任何类型servlet的便捷超类。配置参数的类型转换是自动的，相应的setter方法将使用转换后的值进行调用。
+ * 子类也可以指定必需的属性。 不会匹配bean属性setter的参数将被忽略
+ *
  * <p>This servlet leaves request handling to subclasses, inheriting the default
  * behavior of HttpServlet ({@code doGet}, {@code doPost}, etc).
+ *
+ * 此servlet将请求处理留给子类，继承HttpServlet的默认行为({@code doGet},{@code doPost})等
  *
  * <p>This generic servlet base class has no dependency on the Spring
  * {@link org.springframework.context.ApplicationContext} concept. Simple
@@ -67,10 +77,17 @@ import org.springframework.web.context.support.StandardServletEnvironment;
  * filter's {@link #getServletContext() ServletContext} (see
  * {@link org.springframework.web.context.support.WebApplicationContextUtils}).
  *
+ * 这个通用的servlet基类不依赖于Spring
+ *   {@link org.springframework.context.ApplicationContext}概念
+ * 简单的servlet通常不加载它们自己servlet上下文，而是从Spring根应用程序上下文访问服务bean，
+ * 可以通过过滤器的{@link #getServletContext（）ServletContext}访问。
+ *
  * <p>The {@link FrameworkServlet} class is a more specific servlet base
  * class which loads its own application context. FrameworkServlet serves
  * as direct base class of Spring's full-fledged {@link DispatcherServlet}.
  *
+ * {@link FrameworkServlet}类是一个更具体的servlet基础
+ * 加载自己的应用程序上下文的类。 FrameworkServlet是Spring完整的{@link DispatcherServlet}的直接基类。
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @see #addRequiredProperty
@@ -138,8 +155,9 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 	}
 
 	/**
-	 * Map config parameters onto bean properties of this servlet, and
-	 * invoke subclass initialization.
+	 * 将配置参数映射到此servlet包装成的bean的属性，以及
+	 * 调用子类初始化。
+	 * 我的理解就是将当前servlet(DispatcherServlet)封装成一个spring管理的bean
 	 * @throws ServletException if bean properties are invalid (or required
 	 * properties are missing), or if subclass initialization fails.
 	 */
@@ -148,15 +166,20 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 		if (logger.isDebugEnabled()) {
 			logger.debug("Initializing servlet '" + getServletName() + "'");
 		}
-
 		// Set bean properties from init parameters.
+		// 从init-param这种格式的配置中获取参数并封装为PropertyValues类型
 		PropertyValues pvs = new ServletConfigPropertyValues(getServletConfig(), this.requiredProperties);
 		if (!pvs.isEmpty()) {
 			try {
+				//包装为一个BeanWrapper
 				BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(this);
+				//注册resourceLoader
 				ResourceLoader resourceLoader = new ServletContextResourceLoader(getServletContext());
+				//注册一个属性编辑器用于解析bean的Resource类型属性注入
 				bw.registerCustomEditor(Resource.class, new ResourceEditor(resourceLoader, getEnvironment()));
+				//TODO 空的实现让我们自己遐想的操作
 				initBeanWrapper(bw);
+				//给DispatcherServlet 对应的bean的属性赋值
 				bw.setPropertyValues(pvs, true);
 			}
 			catch (BeansException ex) {
@@ -218,12 +241,15 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 
 
 	/**
-	 * PropertyValues implementation created from ServletConfig init parameters.
+	 * 从ServletConfig init参数创建的PropertyValues实现。
 	 */
 	private static class ServletConfigPropertyValues extends MutablePropertyValues {
 
 		/**
-		 * Create new ServletConfigPropertyValues.
+		 * 将ServletConfig配置的参数封装为ServletConfigPropertyValues类型
+		 * 并做了验证；后面直接使用Spring提供的BeanWrapperImpl直接给bean赋值
+		 * 很方便啊
+		 *
 		 * @param config ServletConfig we'll use to take PropertyValues from
 		 * @param requiredProperties set of property names we need, where
 		 * we can't accept default values
@@ -231,10 +257,10 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 		 */
 		public ServletConfigPropertyValues(ServletConfig config, Set<String> requiredProperties)
 				throws ServletException {
-
+			//不能缺少的属性
 			Set<String> missingProps = (!CollectionUtils.isEmpty(requiredProperties) ?
 					new HashSet<String>(requiredProperties) : null);
-
+			//
 			Enumeration<String> paramNames = config.getInitParameterNames();
 			while (paramNames.hasMoreElements()) {
 				String property = paramNames.nextElement();
@@ -249,8 +275,8 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 			if (!CollectionUtils.isEmpty(missingProps)) {
 				throw new ServletException(
 						"Initialization from ServletConfig for servlet '" + config.getServletName() +
-						"' failed; the following required properties were missing: " +
-						StringUtils.collectionToDelimitedString(missingProps, ", "));
+								"' failed; the following required properties were missing: " +
+								StringUtils.collectionToDelimitedString(missingProps, ", "));
 			}
 		}
 	}
