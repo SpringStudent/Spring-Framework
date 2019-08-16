@@ -20,23 +20,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Interface for web-based theme resolution strategies that allows for
- * both theme resolution via the request and theme modification via
- * request and response.
+
+ * 基于web的主题解析策略接口，允许通过请求进行主题解析，并通过请求和相应进行修改
  *
- * <p>This interface allows for implementations based on session,
- * cookies, etc. The default implementation is
- * {@link org.springframework.web.servlet.theme.FixedThemeResolver},
- * simply using a configured default theme.
+ * 该接口允许基于session，cookie的实现；默认实现
+ * {@link org.springframework.web.servlet.theme.FixedThemeResolver}
+ * 只需使用配置的默认主题。
  *
- * <p>Note that this resolver is only responsible for determining the
- * current theme name. The Theme instance for the resolved theme name
- * gets looked up by DispatcherServlet via the respective ThemeSource,
- * i.e. the current WebApplicationContext.
  *
- * <p>Use {@link org.springframework.web.servlet.support.RequestContext#getTheme()}
- * to retrieve the current theme in controllers or views, independent
- * of the actual resolution strategy.
+ * <p>请注意，此解析器仅负责确定当前主题名称。
+ * 已解析主题名称的Theme实例由DispatcherServlet通过相应的ThemeSource查找，
+ *   例如：当前的WebApplicationContext。
+ *
+ * <p>使用{@link org.springframework.web.servlet.support.RequestContext＃getTheme（）}
+ * 检索控制器或视图中的当前主题，与实际解析策略无关。
  *
  * @author Jean-Pierre Pawlak
  * @author Juergen Hoeller
@@ -47,15 +44,15 @@ import javax.servlet.http.HttpServletResponse;
 public interface ThemeResolver {
 
 	/**
-	 * Resolve the current theme name via the given request.
-	 * Should return a default theme as fallback in any case.
+	 * 通过给定的请求解析当前主题名称
+	 * 在任何情况下都应该返回默认主题作为备用。
 	 * @param request request to be used for resolution
 	 * @return the current theme name
 	 */
 	String resolveThemeName(HttpServletRequest request);
 
 	/**
-	 * Set the current theme name to the given one.
+	 * 将当前主题名称设置为给定的主题名称。
 	 * @param request request to be used for theme name modification
 	 * @param response response to be used for theme name modification
 	 * @param themeName the new theme name

@@ -45,13 +45,11 @@ import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.util.UrlPathHelper;
 
 /**
- * Abstract base class for {@link org.springframework.web.servlet.HandlerMapping}
- * implementations. Supports ordering, a default handler, handler interceptors,
- * including handler interceptors mapped by path patterns.
+ * {@link org.springframework.web.servlet.HandlerMapping}实现的抽象基类。
+ * 支持排序，默认处理程序，处理程序拦截器，包括由路径模式映射的处理程序拦截器。
  *
- * <p>Note: This base class does <i>not</i> support exposure of the
- * {@link #PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE}. Support for this attribute
- * is up to concrete subclasses, typically based on request URL mappings.
+ * <p>注意：这个基类<i>不</ i>支持曝光
+ *   {@link #PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE}。 对此属性的支持取决于具体的子类，通常基于请求URL映射。
  *
  * @author Juergen Hoeller
  * @author Rossen Stoyanchev

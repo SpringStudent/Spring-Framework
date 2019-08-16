@@ -39,18 +39,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
 /**
- * Base class for multipart resolvers that use Apache Commons FileUpload
- * 1.2 or above.
+ * 使用Apache Commons FileUpload 1.2或更高版本的多部分解析器的基类。
  *
- * <p>Provides common configuration properties and parsing functionality
- * for multipart requests, using a Map of Spring CommonsMultipartFile instances
- * as representation of uploaded files and a String-based parameter Map as
- * representation of uploaded form fields.
+ * <p>提供通用配置属性和解析功能
+ * 对于多部分请求，使用Spring CommonsMultipartFile实例的Map作为上载文件的表示，
+ * 并使用基于String的参数Map作为上载的表单字段的表示。
+ * {@link MultipartParsingResult}
  *
- * <p>Subclasses implement concrete resolution strategies for Servlet or Portlet
- * environments: see CommonsMultipartResolver and CommonsPortletMultipartResolver,
- * respectively. This base class is not tied to either of those APIs, factoring
- * out common functionality.
+ * <p>子类为Servlet或Portlet环境实现具体的解决策略：
+ * 分别参见CommonsMultipartResolver和CommonsPortletMultipartResolver。
+ * 此基类不依赖于这些API中的任何一个，从而将通用功能分解出来。
  *
  * @author Juergen Hoeller
  * @since 2.0
@@ -350,6 +348,7 @@ public abstract class CommonsFileUploadSupport {
 	/**
 	 * Holder for a Map of Spring MultipartFiles and a Map of
 	 * multipart parameters.
+	 *
 	 */
 	protected static class MultipartParsingResult {
 

@@ -52,8 +52,8 @@ import org.springframework.web.context.support.StandardServletEnvironment;
  * {@code servlet} tag in {@code web.xml}) as bean properties.
  *
  * 处理{@link javax.servlet.http.HttpServlet}的简单扩展
- * 扩展配置参数当做bean属性({@code init-param}条目
- * {@code web.xml}中的{@code servlet})
+ * 扩展配置参数当做bean的属性
+ * 例如:{@code web.xml}中的{@code servlet})({@code init-param})条目
  *
  *
  * <p>A handy superclass for any type of servlet. Type conversion of config

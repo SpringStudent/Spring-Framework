@@ -98,14 +98,13 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.util.WebUtils;
 
 /**
- * An {@link AbstractHandlerMethodAdapter} that supports {@link HandlerMethod}s
- * with their method argument and return type signature, as defined via
- * {@code @RequestMapping}.
+ * 通过{@code @RequestMapping}定义的带有方法参数和返回类型的 {@link HandlerMethod}
+ *  {@link AbstractHandlerMethodAdapter}支持的类
  *
- * <p>Support for custom argument and return value types can be added via
- * {@link #setCustomArgumentResolvers} and {@link #setCustomReturnValueHandlers}.
- * Or alternatively, to re-configure all argument and return value types,
- * use {@link #setArgumentResolvers} and {@link #setReturnValueHandlers}.
+ * <p>可以添加对自定义参数和返回值类型的支持
+ * {@link #setCustomArgumentResolvers}和{@link #setCustomReturnValueHandlers}。
+ * 或者，要重新配置所有参数和返回值类型，
+ * 使用{@link #setArgumentResolvers}和{@link #setReturnValueHandlers}。
  *
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller

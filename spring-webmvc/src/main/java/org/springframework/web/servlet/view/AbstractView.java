@@ -39,17 +39,13 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.support.RequestContext;
 
 /**
- * Abstract base class for {@link org.springframework.web.servlet.View}
- * implementations. Subclasses should be JavaBeans, to allow for
- * convenient configuration as Spring-managed bean instances.
+ * {@link org.springframework.web.servlet.View}实现的抽象基类。
+ * 子类应该是JavaBeans，以便于配置为Spring管理的bean实例。
  *
- * <p>Provides support for static attributes, to be made available to the view,
- * with a variety of ways to specify them. Static attributes will be merged
- * with the given dynamic attributes (the model that the controller returned)
- * for each render operation.
+ * <p>通过各种方式指定静态属性，为视图提供静态属性支持。
+ * 静态属性将与每个渲染操作的给定动态属性（控制器返回的模型）合并。
  *
- * <p>Extends {@link WebApplicationObjectSupport}, which will be helpful to
- * some views. Subclasses just need to implement the actual rendering.
+ * <p>扩展{@link WebApplicationObjectSupport}，这对某些视图很有帮助。 子类只需要实现实际渲染。
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

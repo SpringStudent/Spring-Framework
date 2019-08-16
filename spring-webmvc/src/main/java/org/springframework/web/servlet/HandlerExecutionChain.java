@@ -28,8 +28,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 /**
- * Handler execution chain, consisting of handler object and any handler interceptors.
- * Returned by HandlerMapping's {@link HandlerMapping#getHandler} method.
+ * 处理程序执行链，由处理程序对象和任何处理程序拦截器组成。
+ * 由HandlerMapping的{@link HandlerMapping＃getHandler}方法返回。
  *
  * @author Juergen Hoeller
  * @since 20.06.2003

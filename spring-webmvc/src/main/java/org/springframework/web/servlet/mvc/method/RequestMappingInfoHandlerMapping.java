@@ -47,8 +47,8 @@ import org.springframework.web.servlet.mvc.condition.NameValueExpression;
 import org.springframework.web.util.WebUtils;
 
 /**
- * Abstract base class for classes for which {@link RequestMappingInfo} defines
- * the mapping between a request and a handler method.
+ *
+ * 定义请求和处理程序方法之间的映射。
  *
  * @author Arjen Poutsma
  * @author Rossen Stoyanchev

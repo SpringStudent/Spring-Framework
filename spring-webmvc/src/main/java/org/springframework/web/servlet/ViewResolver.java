@@ -19,10 +19,9 @@ package org.springframework.web.servlet;
 import java.util.Locale;
 
 /**
- * Interface to be implemented by objects that can resolve views by name.
+ * 由可以按名称解析视图的对象实现的接口。
  *
- * <p>View state doesn't change during the running of the application,
- * so implementations are free to cache views.
+ * <p>在运行应用程序期间，视图状态不会更改，所以实现可以自由地缓存视图。
  *
  * <p>Implementations are encouraged to support internationalization,
  * i.e. localized view resolution.
@@ -36,12 +35,12 @@ import java.util.Locale;
 public interface ViewResolver {
 
 	/**
-	 * Resolve the given view by name.
-	 * <p>Note: To allow for ViewResolver chaining, a ViewResolver should
-	 * return {@code null} if a view with the given name is not defined in it.
-	 * However, this is not required: Some ViewResolvers will always attempt
-	 * to build View objects with the given name, unable to return {@code null}
-	 * (rather throwing an exception when View creation failed).
+	 * 按名称解析给定视图。
+	 * <p>为了允许有ViewResolver链,viewResolver应该返回{@code null}如果给定名称的视图
+	 * 未定义
+	 * 然后，这并不是必要的:一些ViewResolvers将始终尝试
+	 * 使用给定名称构建View对象，无法返回{@code null}
+	 * （而在View创建失败时抛出异常）。
 	 * @param viewName name of the view to resolve
 	 * @param locale Locale in which to resolve the view.
 	 * ViewResolvers that support internationalization should respect this.

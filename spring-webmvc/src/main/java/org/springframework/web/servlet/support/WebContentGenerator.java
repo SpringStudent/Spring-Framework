@@ -38,15 +38,16 @@ import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.context.support.WebApplicationObjectSupport;
 
 /**
- * Convenient superclass for any kind of web content generator,
+ *
+ * 方便的web content生成超类
  * like {@link org.springframework.web.servlet.mvc.AbstractController}
  * and {@link org.springframework.web.servlet.mvc.WebContentInterceptor}.
- * Can also be used for custom handlers that have their own
- * {@link org.springframework.web.servlet.HandlerAdapter}.
+ * 也可以用于自定义的有{@link org.springframework.web.servlet.HandlerAdapter}
+ * 的自定义处理器
  *
- * <p>Supports HTTP cache control options. The usage of corresponding HTTP
- * headers can be controlled via the {@link #setCacheSeconds "cacheSeconds"}
- * and {@link #setCacheControl "cacheControl"} properties.
+ * <p>支持HTTP缓存控制选项。
+ * 可以通过{@link #setCacheSeconds“cacheSeconds”}和{@link #setCacheControl“cacheControl”}
+ * 方法控制HTTP请求头的属性
  *
  * <p><b>NOTE:</b> As of Spring 4.2, this generator's default behavior changed when
  * using only {@link #setCacheSeconds}, sending HTTP response headers that are in line

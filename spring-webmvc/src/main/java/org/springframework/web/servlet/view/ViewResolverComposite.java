@@ -33,7 +33,8 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 
 /**
- * A {@link org.springframework.web.servlet.ViewResolver} that delegates to others.
+ * 委托给其他的{@link org.springframework.web.servlet.ViewResolver}执行的
+ * 组件
  *
  * @author Sebastien Deleuze
  * @author Rossen Stoyanchev

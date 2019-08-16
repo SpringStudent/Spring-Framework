@@ -31,14 +31,20 @@ import org.springframework.context.ApplicationContextException;
  * context reference and provides an initialization callback method.
  * Furthermore, it offers numerous convenience methods for message lookup.
  *
+ * 如果想要拿到ApplicationContext对象的便捷的超类，例如用于自定义查找协作Bean或用于特定于上下文的资源访问。
+ * 它保存应用程序上下文引用并提供初始化回调方法。此外，它为消息查找提供了许多便利方法。
+ *
  * <p>There is no requirement to subclass this class: It just makes things
  * a little easier if you need access to the context, e.g. for access to
  * file resources or to the message source. Note that many application
  * objects do not need to be aware of the application context at all,
  * as they can receive collaborating beans via bean references.
  *
- * <p>Many framework classes are derived from this class, particularly
- * within the web support.
+ * 没有要求对此类源进行子类化：该类使访问上下文更加容易,例如： 用于访问文件资源或消息源。
+ * 请注意，许多应用程序对象根本不需要了解应用程序上下文，因为它们可以通过bean引用接收协作bean。
+ *
+ *
+ * <p>许多框架类都是从这个类派生的，特别是在网络上的支持。
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

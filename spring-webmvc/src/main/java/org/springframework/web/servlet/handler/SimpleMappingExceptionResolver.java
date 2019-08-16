@@ -28,12 +28,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 /**
- * {@link org.springframework.web.servlet.HandlerExceptionResolver} implementation
- * that allows for mapping exception class names to view names, either for a set of
- * given handlers or for all handlers in the DispatcherServlet.
+ * {@link org.springframework.web.servlet.HandlerExceptionResolver}实现，
+ * 允许将异常类名映射到一组给定处理程序或DispatcherServlet中的所有处理程序的名称。
  *
- * <p>Error views are analogous to error page JSPs, but can be used with any kind of
- * exception including any checked one, with fine-granular mappings for specific handlers.
+ * <p>错误视图类似于错误页面JSP，但可以与任何类型的异常一起使用，
+ * 包括任何已检查的异常，具有针对特定处理程序的细粒度映射。
  *
  * @author Juergen Hoeller
  * @author Arjen Poutsma

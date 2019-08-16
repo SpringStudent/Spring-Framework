@@ -26,30 +26,27 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.util.WebUtils;
 
 /**
- * Wrapper for a JSP or other resource within the same web application.
- * Exposes model objects as request attributes and forwards the request to
- * the specified resource URL using a {@link javax.servlet.RequestDispatcher}.
+ * 适用于同一Web应用程序中的JSP或其他资源的包装器。
+ * 将模型对象公开为请求属性，并使用{@link javax.servlet.RequestDispatcher}
+ * 将请求转发到指定的资源URL。
  *
- * <p>A URL for this view is supposed to specify a resource within the web
- * application, suitable for RequestDispatcher's {@code forward} or
- * {@code include} method.
+ * <p>此视图的URL应该指定Web应用程序中的资源，
+ * 适用于RequestDispatcher的{@code forward}或{@code include}方法。
  *
  * <p>If operating within an already included request or within a response that
  * has already been committed, this view will fall back to an include instead of
- * a forward. This can be enforced by calling {@code response.flushBuffer()}
- * (which will commit the response) before rendering the view.
+ * a forward.
+ * 如果操作已经包含在已经提交的的请求或者响应,视图将会fall back而不是转发
+ * 这可以通过调用{@code response.flushBuffer（）}来强制执行。
+ * （在渲染视图之前将提交响应）。
  *
- * <p>Typical usage with {@link InternalResourceViewResolver} looks as follows,
- * from the perspective of the DispatcherServlet context definition:
- *
+ * <p>从DispatcherServlet上下文定义的角度来看，{@link InternalResourceViewResolver}的典型用法如下所示：
  * <pre class="code">&lt;bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;
  *   &lt;property name="prefix" value="/WEB-INF/jsp/"/&gt;
  *   &lt;property name="suffix" value=".jsp"/&gt;
  * &lt;/bean&gt;</pre>
  *
- * Every view name returned from a handler will be translated to a JSP
- * resource (for example: "myView" -> "/WEB-INF/jsp/myView.jsp"), using
- * this view class by default.
+ * 从处理程序返回的每个视图名称都将被转换为JSP资源（例如：“myView” - >“/ WWE-INF / jsp / myView.jsp”），默认情况下使用此视图类。
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

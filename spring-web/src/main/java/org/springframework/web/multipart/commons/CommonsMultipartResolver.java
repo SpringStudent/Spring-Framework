@@ -38,19 +38,17 @@ import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequ
 import org.springframework.web.util.WebUtils;
 
 /**
- * Servlet-based {@link MultipartResolver} implementation for
- * <a href="https://commons.apache.org/proper/commons-fileupload">Apache Commons FileUpload</a>
- * 1.2 or above.
+ * 基于Servlet的{@link MultipartResolver}实现
+ * <a href="https://commons.apache.org/proper/commons-fileupload"> Apache Commons FileUpload </a> 1.2或更高版本。
  *
- * <p>Provides "maxUploadSize", "maxInMemorySize" and "defaultEncoding" settings as
- * bean properties (inherited from {@link CommonsFileUploadSupport}). See corresponding
- * ServletFileUpload / DiskFileItemFactory properties ("sizeMax", "sizeThreshold",
- * "headerEncoding") for details in terms of defaults and accepted values.
+ * <p>提供“maxUploadSize”，“maxInMemorySize”和“defaultEncoding”设置作为bean属性
+ * （继承自{@link CommonsFileUploadSupport}）。有关默认值和接受值的详细信息，
+ * 请参阅相应的ServletFileUpload / DiskFileItemFactory属性（“sizeMax”，“sizeThreshold”，“headerEncoding”）。
  *
- * <p>Saves temporary files to the servlet container's temporary directory.
- * Needs to be initialized <i>either</i> by an application context <i>or</i>
- * via the constructor that takes a ServletContext (for standalone usage).
- *
+ * <p>将临时文件保存到servlet容器的临时目录中。
+ * 需要通过应用程序的上下文ApplicationContext
+ * 或者带有ServletContext的构造函数(独立使用的状况)
+ * 初始化
  * @author Trevor D. Cook
  * @author Juergen Hoeller
  * @since 29.09.2003

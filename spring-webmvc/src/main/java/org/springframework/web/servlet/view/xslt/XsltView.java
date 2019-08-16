@@ -53,15 +53,11 @@ import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.util.WebUtils;
 
 /**
- * XSLT-driven View that allows for response context to be rendered as the
- * result of an XSLT transformation.
+ * XSLT驱动的View，允许响应上下文作为XSLT转换的结果呈现。
  *
- * <p>The XSLT Source object is supplied as a parameter in the model and then
- * {@link #locateSource detected} during response rendering. Users can either specify
- * a specific entry in the model via the {@link #setSourceKey sourceKey} property or
- * have Spring locate the Source object. This class also provides basic conversion
- * of objects into Source implementations. See {@link #getSourceTypes() here}
- * for more details.
+ * <p>XSLT Source对象作为模型中的参数提供，然后在响应呈现期间检测到{@link #locateSource}。
+ * 用户可以通过{@link #setSourceKey sourceKey}属性在模型中指定特定条目，或者让Spring找到Source对象。
+ * 此类还提供对象到Source实现的基本转换。 有关详细信息，请参阅{@link #getSourceTypes（）here}。
  *
  * <p>All model parameters are passed to the XSLT Transformer as parameters.
  * In addition the user can configure {@link #setOutputProperties output properties}

@@ -27,12 +27,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.LocaleResolver;
 
 /**
- * {@link LocaleResolver} implementation that simply uses the primary locale
- * specified in the "accept-language" header of the HTTP request (that is,
- * the locale sent by the client browser, normally that of the client's OS).
+ * {@link LocaleResolver}实现，它只使用HTTP请求的“accept-language”
+ * 标头中指定的主要语言环境（即客户端浏览器发送的语言环境，通常是客户端操作系统的语言环境）。
  *
- * <p>Note: Does not support {@code setLocale}, since the accept header
- * can only be changed through changing the client's locale settings.
+ * <p>注意：不支持{@code setLocale}，因为接受的请求头只能通过改变客户端的区域设置
  *
  * @author Juergen Hoeller
  * @author Rossen Stoyanchev

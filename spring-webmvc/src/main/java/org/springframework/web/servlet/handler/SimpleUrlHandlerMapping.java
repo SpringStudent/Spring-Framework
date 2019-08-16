@@ -24,27 +24,22 @@ import org.springframework.beans.BeansException;
 import org.springframework.util.CollectionUtils;
 
 /**
- * Implementation of the {@link org.springframework.web.servlet.HandlerMapping}
- * interface to map from URLs to request handler beans. Supports both mapping to bean
- * instances and mapping to bean names; the latter is required for non-singleton handlers.
+ * 从URL映射到请求处理程序bean的{@link org.springframework.web.servlet.HandlerMapping}接口实现。
+ * 支持映射到bean实例和映射到bean名称; 后者是非单例处理程序所必需的。
  *
- * <p>The "urlMap" property is suitable for populating the handler map with
- * bean references, e.g. via the map element in XML bean definitions.
+ * “urlMap”属性适合用于填充处理程序映射的bean引用，
+ * <property name="mappings">
+*             <props>
+*                 <prop key="/userlist.htm">userController</prop>
+*             </props>
+ * </property>
  *
- * <p>Mappings to bean names can be set via the "mappings" property, in a form
- * accepted by the {@code java.util.Properties} class, like as follows:<br>
- * {@code
- * /welcome.html=ticketController
- * /show.html=ticketController
- * }<br>
- * The syntax is {@code PATH=HANDLER_BEAN_NAME}.
- * If the path doesn't begin with a slash, one is prepended.
  *
- * <p>Supports direct matches (given "/test" -> registered "/test") and "*"
- * pattern matches (given "/test" -> registered "/t*"). Note that the default
- * is to map within the current servlet mapping if applicable; see the
- * {@link #setAlwaysUseFullPath "alwaysUseFullPath"} property. For details on the
- * pattern options, see the {@link org.springframework.util.AntPathMatcher} javadoc.
+ * <p>支持直接匹配（给定“/ test” - >注册“/ test”）和“*”
+ *   模式匹配（给定“/ test” - >注册“/ t *”）。
+ * 请注意，默认情况下是在当前servlet映射中映射（如果适用）;
+ * 请参阅{@link #setAlwaysUseFullPath“alwaysUseFullPath”}属性。
+ * 有关模式选项的详细信息，请参阅{@link org.springframework.util.AntPathMatcher} javadoc。
 
  * @author Rod Johnson
  * @author Juergen Hoeller

@@ -45,11 +45,9 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerMapping;
 
 /**
- * Abstract base class for {@link HandlerMapping} implementations that define
- * a mapping between a request and a {@link HandlerMethod}.
+ * {@link HandlerMapping}实现的抽象基类，用于定义请求与{@link HandlerMethod}之间的映射。
  *
- * <p>For each registered handler method, a unique mapping is maintained with
- * subclasses defining the details of the mapping type {@code <T>}.
+ * <p>对于每个已注册的处理程序方法，将维护唯一映射，其中子类定义映射类型{@code <T>}的详细信息。
  *
  * @author Arjen Poutsma
  * @author Rossen Stoyanchev

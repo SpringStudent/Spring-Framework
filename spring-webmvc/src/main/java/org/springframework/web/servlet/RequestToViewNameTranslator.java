@@ -23,6 +23,9 @@ import javax.servlet.http.HttpServletRequest;
  * {@link javax.servlet.http.HttpServletRequest} into a
  * logical view name when no view name is explicitly supplied.
  *
+ * 策略接口，用于在未显式提供视图名称时将传入的
+ * {@link javax.servlet.http.HttpServletRequest}转换为逻辑视图名称。
+ *
  * @author Rob Harrop
  * @author Juergen Hoeller
  * @since 2.0
@@ -30,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface RequestToViewNameTranslator {
 
 	/**
-	 * Translate the given {@link HttpServletRequest} into a view name.
+	 * 将给定的{@link HttpServletRequest}转换为视图名称。
 	 * @param request the incoming {@link HttpServletRequest} providing
 	 * the context from which a view name is to be resolved
 	 * @return the view name (or {@code null} if no default found)

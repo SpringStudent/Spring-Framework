@@ -35,7 +35,7 @@ import org.springframework.web.servlet.FlashMapManager;
 import org.springframework.web.util.UrlPathHelper;
 
 /**
- * A base class for {@link FlashMapManager} implementations.
+ * {@link FlashMapManager}实现的基类。
  *
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller

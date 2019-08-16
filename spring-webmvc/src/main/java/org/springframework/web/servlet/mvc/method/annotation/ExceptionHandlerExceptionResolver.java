@@ -61,13 +61,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 /**
- * An {@link AbstractHandlerMethodExceptionResolver} that resolves exceptions
- * through {@code @ExceptionHandler} methods.
+ * 一个{@link AbstractHandlerMethodExceptionResolver}，它通过{@code @ExceptionHandler}方法解决异常。
  *
- * <p>Support for custom argument and return value types can be added via
- * {@link #setCustomArgumentResolvers} and {@link #setCustomReturnValueHandlers}.
- * Or alternatively to re-configure all argument and return value types use
- * {@link #setArgumentResolvers} and {@link #setReturnValueHandlers(List)}.
+ * <p>可以通过{@link #setCustomArgumentResolvers}和{@link #setCustomReturnValueHandlers}添加对自定义参数和返回值类型的支持。
+ * 或者，重新配置所有参数和返回值类型使用{@link #setArgumentResolvers}和{@link #setReturnValueHandlers（List）}。
  *
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller

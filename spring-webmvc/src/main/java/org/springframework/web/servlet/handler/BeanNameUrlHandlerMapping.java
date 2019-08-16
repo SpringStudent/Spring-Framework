@@ -22,27 +22,23 @@ import java.util.List;
 import org.springframework.util.StringUtils;
 
 /**
- * Implementation of the {@link org.springframework.web.servlet.HandlerMapping}
- * interface that map from URLs to beans with names that start with a slash ("/"),
- * similar to how Struts maps URLs to action names.
  *
- * <p>This is the default implementation used by the
- * {@link org.springframework.web.servlet.DispatcherServlet}, along with
- * {@link org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping}.
- * Alternatively, {@link SimpleUrlHandlerMapping} allows for customizing a
- * handler mapping declaratively.
+ * 实现了从URL映射到名称以斜杠（“/”）开头的bean，类似于Struts将URL映射到操作名称的方式。
+ * {@link org.springframework.web.servlet.HandlerMapping}接口的实现
  *
- * <p>The mapping is from URL to bean name. Thus an incoming URL "/foo" would map
- * to a handler named "/foo", or to "/foo /foo2" in case of multiple mappings to
- * a single handler. Note: In XML definitions, you'll need to use an alias
- * name="/foo" in the bean definition, as the XML id may not contain slashes.
+ * <p>当前类和{@link org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping}
+ * 是使用{@link org.springframework.web.servlet.DispatcherServlet}时提供的默认handlerMapping
+ * 或者，{@link SimpleUrlHandlerMapping}允许以声明方式自定义处理程序映射。 
  *
- * <p>Supports direct matches (given "/test" -> registered "/test") and "*"
- * matches (given "/test" -> registered "/t*"). Note that the default is
- * to map within the current servlet mapping if applicable; see the
- * {@link #setAlwaysUseFullPath "alwaysUseFullPath"} property for details.
- * For details on the pattern options, see the
- * {@link org.springframework.util.AntPathMatcher} javadoc.
+ *
+ * <p>从URL到bean名称的映射. 因此，在多个映射到单个处理程序的情况下，
+ * 传入的URL“/ foo”将映射到名为“/ foo”的处理程序或“/ foo / foo2”。
+ *注意：在XML定义中，您需要在bean定义中使用别名name =“/ foo”，因为XML id可能不包含斜杠。
+ *
+ * <p>支持直接匹配（给定“/ test” - >注册“/ test”）和“*”
+ *   匹配（给定“/ test” - >注册“/ t *”）。 请注意，默认情况下是在当前servlet映射中映射（如果适用）;
+ * 有关详细信息，请参阅{@link #setAlwaysUseFullPath“alwaysUseFullPath”}属性。
+ * 有关模式选项的详细信息，请参阅{@link org.springframework.util.AntPathMatcher} javadoc。
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

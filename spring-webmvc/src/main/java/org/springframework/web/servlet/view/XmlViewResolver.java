@@ -32,14 +32,13 @@ import org.springframework.web.context.support.GenericWebApplicationContext;
 import org.springframework.web.servlet.View;
 
 /**
- * A {@link org.springframework.web.servlet.ViewResolver} implementation that uses
- * bean definitions in a dedicated XML file for view definitions, specified by
- * resource location. The file will typically be located in the WEB-INF directory;
- * the default is "/WEB-INF/views.xml".
+ * 一个{@link org.springframework.web.servlet.ViewResolver}实现，
+ * 它使用专用XML文件中的bean定义来查看由资源位置指定的视图定义。
+ * 该文件通常位于WEB-INF目录中;默认为“/WEB-INF/views.xml”。
  *
- * <p>This {@code ViewResolver} does not support internationalization at the level
- * of its definition resources. Consider {@link ResourceBundleViewResolver} if you
- * need to apply different view resources per locale.
+ * <p>此{@code ViewResolver}不支持其定义资源级别的国际化。
+ * 如果您考虑{@link ResourceBundleViewResolver}
+ * 需要为每个区域设置应用不同的视图资源。
  *
  * <p>Note: This {@code ViewResolver} implements the {@link Ordered} interface
  * in order to allow for flexible participation in {@code ViewResolver} chaining.

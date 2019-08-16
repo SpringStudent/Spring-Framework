@@ -22,10 +22,8 @@ import org.springframework.context.ApplicationContextException;
 import org.springframework.util.ObjectUtils;
 
 /**
- * Abstract implementation of the {@link org.springframework.web.servlet.HandlerMapping}
- * interface, detecting URL mappings for handler beans through introspection of all
- * defined beans in the application context.
- *
+ * 通过内省的方式为URL找到合适存在于上下文的处理beans的抽象类实现了
+ * {@link org.springframework.web.servlet.HandlerMapping}
  * @author Juergen Hoeller
  * @since 2.5
  * @see #determineUrlsForHandler

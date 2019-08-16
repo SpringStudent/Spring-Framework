@@ -24,23 +24,18 @@ import org.springframework.web.servlet.RequestToViewNameTranslator;
 import org.springframework.web.util.UrlPathHelper;
 
 /**
- * {@link RequestToViewNameTranslator} that simply transforms the URI of
- * the incoming request into a view name.
+ * {@link RequestToViewNameTranslator}，它只是将传入请求的URI转换为视图名称。
  *
- * <p>Can be explicitly defined as the {@code viewNameTranslator} bean in a
- * {@link org.springframework.web.servlet.DispatcherServlet} context.
- * Otherwise, a plain default instance will be used.
+ * <p>如果未明确给 {@link org.springframework.web.servlet.DispatcherServlet}定义
+ * 一个{@code viewNameTranslator} bean则使用当前类的bean实例
  *
- * <p>The default transformation simply strips leading and trailing slashes
- * as well as the file extension of the URI, and returns the result as the
- * view name with the configured {@link #setPrefix prefix} and a
- * {@link #setSuffix suffix} added as appropriate.
+ * <p>默认转换只是删除前导和尾部斜杠以及URI的文件扩展名，
+ * 并将结果作为视图名称返回，并使用已配置的{@link #setPrefix prefix}和{@link #setSuffix后缀}添加。
  *
- * <p>The stripping of the leading slash and file extension can be disabled
- * using the {@link #setStripLeadingSlash stripLeadingSlash} and
- * {@link #setStripExtension stripExtension} properties, respectively.
+ * <p>可以分别使用{@link #setStripLeadingSlash stripLeadingSlash}和
+ * {@link #setStripExtension stripExtension}属性禁用前导斜杠和文件扩展名的删除。
  *
- * <p>Find below some examples of request to view name translation.
+ * <p>下面是一些查看名称翻译请求的示例。
  * <ul>
  * <li>{@code http://localhost:8080/gamecast/display.html} &raquo; {@code display}</li>
  * <li>{@code http://localhost:8080/gamecast/displayShoppingCart.html} &raquo; {@code displayShoppingCart}</li>

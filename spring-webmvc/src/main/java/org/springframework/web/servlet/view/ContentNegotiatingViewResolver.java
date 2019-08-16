@@ -50,15 +50,13 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 
 /**
- * Implementation of {@link ViewResolver} that resolves a view based on the request file name
- * or {@code Accept} header.
+ * {@link ViewResolver}的实现，它根据请求文件名或{@code Accept}标头解析视图。
  *
- * <p>The {@code ContentNegotiatingViewResolver} does not resolve views itself, but delegates to
- * other {@link ViewResolver}s. By default, these other view resolvers are picked up automatically
- * from the application context, though they can also be set explicitly by using the
- * {@link #setViewResolvers viewResolvers} property. <strong>Note</strong> that in order for this
- * view resolver to work properly, the {@link #setOrder order} property needs to be set to a higher
- * precedence than the others (the default is {@link Ordered#HIGHEST_PRECEDENCE}).
+ * <p>{@code ContentNegotiatingViewResolver}本身并不解析视图，而是委托给其他{@link ViewResolver}。
+ * 默认情况下，这些其他视图解析器会自动从应用程序上下文中选取，
+ * 但也可以使用{@link #setViewResolvers viewResolvers}属性显式设置它们。
+ * <strong>注意</ strong>为了使此视图解析器正常工作，需要将{@link #setOrder order}
+ * 属性设置为高于其他属性（默认为{@link Ordered＃HIGHEST_PRECEDENCE}）。
  *
  * <p>This view resolver uses the requested {@linkplain MediaType media type} to select a suitable
  * {@link View} for a request. The requested media type is determined through the configured

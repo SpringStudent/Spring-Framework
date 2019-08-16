@@ -21,25 +21,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Interface for web-based locale resolution strategies that allows for
- * both locale resolution via the request and locale modification via
- * request and response.
  *
- * <p>This interface allows for implementations based on request, session,
- * cookies, etc. The default implementation is
- * {@link org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver},
- * simply using the request's locale provided by the respective HTTP header.
+ * 基于web的区域设置解决策略接口允许通过请求进行区域设置解析，并通过请求和响应修改区域设置。
  *
- * <p>Use {@link org.springframework.web.servlet.support.RequestContext#getLocale()}
- * to retrieve the current locale in controllers or views, independent
- * of the actual resolution strategy.
+ * <p>该接口允许基于请求，session，
+ * cookies等。默认实现是
+ * {@link org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver}，
+ * 只需使用相应HTTP标头提供的请求的语言环境。
+
+ * 使用Use {@link org.springframework.web.servlet.support.RequestContext#getLocale()}
+ * 获取来检索控制器或视图中的当前区域设置，独立于实际的区域设置策略
  *
- * <p>Note: As of Spring 4.0, there is an extended strategy interface
- * called {@link LocaleContextResolver}, allowing for resolution of
- * a {@link org.springframework.context.i18n.LocaleContext} object,
- * potentially including associated time zone information. Spring's
- * provided resolver implementations implement the extended
- * {@link LocaleContextResolver} interface wherever appropriate.
+ * <p>注意：从Spring 4.0开始，有一个扩展的策略接口
+ * 叫{@link LocaleContextResolver}，允许解析
+ * 一个{@link org.springframework.context.i18n.LocaleContext}对象，
+ * 可能包括相关的时区信息。Spring提供的解析器在适当的地方实现了扩展
+ * {@link LocaleContextResolver}接口。
  *
  * @author Juergen Hoeller
  * @since 27.02.2003
@@ -51,15 +48,15 @@ import javax.servlet.http.HttpServletResponse;
 public interface LocaleResolver {
 
 	/**
-	 * Resolve the current locale via the given request.
-	 * Can return a default locale as fallback in any case.
+	 * 通过给定请求解析当前区域设置。
+	 * 在任何情况下都可以返回默认语言环境
 	 * @param request the request to resolve the locale for
 	 * @return the current locale (never {@code null})
 	 */
 	Locale resolveLocale(HttpServletRequest request);
 
 	/**
-	 * Set the current locale to the given one.
+	 * 将当前区域设置设置为给定的区域设置。
 	 * @param request the request to be used for locale modification
 	 * @param response the response to be used for locale modification
 	 * @param locale the new locale, or {@code null} to clear the locale

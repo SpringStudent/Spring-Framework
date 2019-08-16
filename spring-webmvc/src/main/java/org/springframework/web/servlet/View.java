@@ -21,19 +21,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * MVC View for a web interaction. Implementations are responsible for rendering
- * content, and exposing the model. A single view exposes multiple model attributes.
+ * MVC查看Web交互。 实现负责呈现内容并公开模型。 单个视图公开多个模型属性
  *
  * <p>This class and the MVC approach associated with it is discussed in Chapter 12 of
  * <a href="https://www.amazon.com/exec/obidos/tg/detail/-/0764543857/">Expert One-On-One J2EE Design and Development</a>
  * by Rod Johnson (Wrox, 2002).
  *
- * <p>View implementations may differ widely. An obvious implementation would be
- * JSP-based. Other implementations might be XSLT-based, or use an HTML generation library.
- * This interface is designed to avoid restricting the range of possible implementations.
+ * <p>视图实现可能有很大不同。 一个明显的实现是基于JSP的。 其他实现可能是基于XSLT的，或使用HTML生成库。
+ * 此接口旨在避免限制可能的实现范围。
  *
- * <p>Views should be beans. They are likely to be instantiated as beans by a ViewResolver.
- * As this interface is stateless, view implementations should be thread-safe.
+ * <p>视图应该是bean。 它们很可能被ViewResolver实例化为bean。由于此接口是无状态的，因此视图实现应该是线程安全的。
  *
  * @author Rod Johnson
  * @author Arjen Poutsma
@@ -69,19 +66,17 @@ public interface View {
 
 
 	/**
-	 * Return the content type of the view, if predetermined.
-	 * <p>Can be used to check the view's content type upfront,
-	 * i.e. before an actual rendering attempt.
+	 * 如果预定义了返回视图的内容类型
+	 * <p>可用于预先检查视图的内容类型，即在实际渲染尝试之前。
 	 * @return the content type String (optionally including a character set),
 	 * or {@code null} if not predetermined
 	 */
 	String getContentType();
 
 	/**
-	 * Render the view given the specified model.
-	 * <p>The first step will be preparing the request: In the JSP case, this would mean
-	 * setting model objects as request attributes. The second step will be the actual
-	 * rendering of the view, for example including the JSP via a RequestDispatcher.
+	 * 给定指定模型的视图。
+	 * <p>第一步是准备请求：在JSP情况下，这意味着将模型对象设置为请求属性。
+	 * 第二步是视图的实际呈现
 	 * @param model Map with name Strings as keys and corresponding model
 	 * objects as values (Map can also be {@code null} in case of empty model)
 	 * @param request current HTTP request

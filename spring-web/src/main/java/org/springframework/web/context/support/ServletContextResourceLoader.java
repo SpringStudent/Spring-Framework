@@ -22,12 +22,11 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 
 /**
- * ResourceLoader implementation that resolves paths as ServletContext
- * resources, for use outside a WebApplicationContext (for example,
- * in an HttpServletBean or GenericFilterBean subclass).
+ * ResourceLoader实现，将路径解析为ServletContext资源，
+ * 以便在WebApplicationContext外部使用（例如，在HttpServletBean或GenericFilterBean子类中）
  *
- * <p>Within a WebApplicationContext, resource paths are automatically
- * resolved as ServletContext resources by the context implementation.
+ * <p>在WebApplicationContext中，资源路径是自动的
+ *   通过上下文实现解析为ServletContext资源。
  *
  * @author Juergen Hoeller
  * @since 1.0.2

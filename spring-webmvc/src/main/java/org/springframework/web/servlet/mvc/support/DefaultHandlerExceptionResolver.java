@@ -52,12 +52,10 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
 
 /**
- * The default implementation of the {@link org.springframework.web.servlet.HandlerExceptionResolver}
- * interface, resolving standard Spring MVC exceptions and translating them to corresponding
- * HTTP status codes.
+ * {@link org.springframework.web.servlet.HandlerExceptionResolver}的默认实现
+ * 接口，解析标准的Spring MVC异常并将它们转换为相应的HTTP状态代码。
  *
- * <p>This exception resolver is enabled by default in the common Spring
- * {@link org.springframework.web.servlet.DispatcherServlet}.
+ * <p>默认情况下，在常见的Spring {@link org.springframework.web.servlet.DispatcherServlet}中启用此异常解析程序。
  *
  * @author Arjen Poutsma
  * @author Rossen Stoyanchev
