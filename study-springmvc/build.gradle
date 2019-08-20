@@ -25,4 +25,9 @@ dependencies {
     compile group: 'asm', name: 'asm', version: '3.3.1'
     runtime group: 'junit', name: 'junit', version: '4.12'
     optional group: 'cglib', name: 'cglib', version: '2.2.2'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.7'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.7'
+
+
 }

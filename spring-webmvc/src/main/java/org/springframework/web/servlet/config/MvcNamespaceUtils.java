@@ -61,9 +61,13 @@ public abstract class MvcNamespaceUtils {
 
 
 	public static void registerDefaultComponents(ParserContext parserContext, Object source) {
+		//注册BeanNameUrlHandlerMapping
 		registerBeanNameUrlHandlerMapping(parserContext, source);
+		//注册HttpRequestHandlerAdapter
 		registerHttpRequestHandlerAdapter(parserContext, source);
+		//注册SimpleControllerHandlerAdapter
 		registerSimpleControllerHandlerAdapter(parserContext, source);
+		//注册HandlerMappingIntrospector
 		registerHandlerMappingIntrospector(parserContext, source);
 	}
 
@@ -118,8 +122,7 @@ public abstract class MvcNamespaceUtils {
 	}
 
 	/**
-	 * Registers  an {@link HttpRequestHandlerAdapter} under a well-known
-	 * name unless already registered.
+	 * 除非已经注册，否则使用知名名称注册{@link HttpRequestHandlerAdapter}。
 	 */
 	private static void registerBeanNameUrlHandlerMapping(ParserContext context, Object source) {
 		if (!context.getRegistry().containsBeanDefinition(BEAN_NAME_URL_HANDLER_MAPPING_BEAN_NAME)) {
@@ -135,8 +138,8 @@ public abstract class MvcNamespaceUtils {
 	}
 
 	/**
-	 * Registers  an {@link HttpRequestHandlerAdapter} under a well-known
-	 * name unless already registered.
+	 *在众所周知的情况下注册{@link HttpRequestHandlerAdapter}
+	 * 名称，除非已经注册。
 	 */
 	private static void registerHttpRequestHandlerAdapter(ParserContext context, Object source) {
 		if (!context.getRegistry().containsBeanDefinition(HTTP_REQUEST_HANDLER_ADAPTER_BEAN_NAME)) {
@@ -163,14 +166,13 @@ public abstract class MvcNamespaceUtils {
 	}
 
 	/**
-	 * Registers a {@code Map<String, CorsConfiguration>} (mapped {@code CorsConfiguration}s)
-	 * under a well-known name unless already registered. The bean definition may be updated
-	 * if a non-null CORS configuration is provided.
+	 * 除非已经注册，否则以一个众所周知的名称注册{@code Map <String，CorsConfiguration>}（映射{@code CorsConfiguration}）。
+	 * 如果提供了非空CORS配置，则可以更新bean定义。
 	 * @return a RuntimeBeanReference to this {@code Map<String, CorsConfiguration>} instance
 	 */
 	public static RuntimeBeanReference registerCorsConfigurations(
 			Map<String, CorsConfiguration> corsConfigurations, ParserContext context, Object source) {
-
+		//如果没有配置mvcCorsConfigurations bbean
 		if (!context.getRegistry().containsBeanDefinition(CORS_CONFIGURATION_BEAN_NAME)) {
 			RootBeanDefinition corsDef = new RootBeanDefinition(LinkedHashMap.class);
 			corsDef.setSource(source);

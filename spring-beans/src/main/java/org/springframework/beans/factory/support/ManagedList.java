@@ -23,8 +23,8 @@ import org.springframework.beans.BeanMetadataElement;
 import org.springframework.beans.Mergeable;
 
 /**
- * Tag collection class used to hold managed List elements, which may
- * include runtime bean references (to be resolved into bean objects).
+ * 用于保存托管List元素的标记集合类，可以使用
+ * 包括运行时bean引用（要解析为bean对象）。
  *
  * @author Rod Johnson
  * @author Rob Harrop

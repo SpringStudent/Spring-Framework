@@ -25,12 +25,11 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.util.Assert;
 
 /**
- * Interceptor that places the configured {@link ConversionService} in request scope
- * so it's available during request processing. The request attribute name is
- * "org.springframework.core.convert.ConversionService", the value of
- * {@code ConversionService.class.getName()}.
+ * 拦截器将已配置的{@link ConversionService}置于请求范围内，以便在请求处理期间可用。
+ * 请求属性名称是“org.springframework.core.convert.ConversionService”，其值为
+ * {@code ConversionService.class.getName（）}。
  *
- * <p>Mainly for use within JSP tags such as the spring:eval tag.
+ * <p>主要用于JSP标记，例如spring：eval标记。
  *
  * @author Keith Donald
  * @since 3.0.1

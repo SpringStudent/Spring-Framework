@@ -23,8 +23,7 @@ import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Abstract adapter class for the {@link AsyncHandlerInterceptor} interface,
- * for simplified implementation of pre-only/post-only interceptors.
+ *{@link AsyncHandlerInterceptor}接口的抽象适配器类，用于简化pre-only / post-only拦截器的实现。
  *
  * @author Juergen Hoeller
  * @since 05.12.2003

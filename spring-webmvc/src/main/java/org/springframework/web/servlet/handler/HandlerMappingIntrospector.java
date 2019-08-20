@@ -44,15 +44,13 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.HandlerMapping;
 
 /**
- * Helper class to get information from the {@code HandlerMapping} that would
- * serve a specific request.
  *
- * <p>Provides the following methods:
+ * 帮助class从特定的请求中获取 {@code HandlerMapping}信息
+ *
+ * <p>提供以下方法：
  * <ul>
- * <li>{@link #getMatchableHandlerMapping} &mdash; obtain a {@code HandlerMapping}
- * to check request-matching criteria against.
- * <li>{@link #getCorsConfiguration} &mdash; obtain the CORS configuration for the
- * request.
+ * <li>{@link #getMatchableHandlerMapping} &mdash; 获取{@code HandlerMapping}以检查请求匹配条件。
+ * <li>{@link #getCorsConfiguration} &mdash; 获取请求的CORS配置。
  * </ul>
  *
  * @author Rossen Stoyanchev

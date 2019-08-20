@@ -19,7 +19,7 @@ package org.springframework.web.multipart;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 一种用于多部分文件上传解析的策略接口
+ * 一种用于文件上传解析的策略接口
  * 使用<a href="https://www.ietf.org/rfc/rfc1867.txt"> RFC 1867 </a>。
  * 实现通常可以在应用程序上下文中使用，也可以单独使用。
  *
