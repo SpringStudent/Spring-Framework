@@ -31,14 +31,14 @@ import org.springframework.http.HttpMethod;
 public abstract class CorsUtils {
 
 	/**
-	 * Returns {@code true} if the request is a valid CORS one.
+	 * 如果请求是有效的CORS请求，则返回{@code true}。
 	 */
 	public static boolean isCorsRequest(HttpServletRequest request) {
 		return (request.getHeader(HttpHeaders.ORIGIN) != null);
 	}
 
 	/**
-	 * Returns {@code true} if the request is a valid CORS pre-flight one.
+	 * 如果请求是有效的CORS预请求，则返回{@code true}。
 	 */
 	public static boolean isPreFlightRequest(HttpServletRequest request) {
 		return (isCorsRequest(request) && HttpMethod.OPTIONS.matches(request.getMethod()) &&

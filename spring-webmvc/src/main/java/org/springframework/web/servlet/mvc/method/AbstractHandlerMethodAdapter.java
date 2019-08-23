@@ -75,7 +75,7 @@ public abstract class AbstractHandlerMethodAdapter extends WebContentGenerator i
 	protected abstract boolean supportsInternal(HandlerMethod handlerMethod);
 
 	/**
-	 * This implementation expects the handler to be an {@link HandlerMethod}.
+	 * 此实现要求处理程序为{@link HandlerMethod}。
 	 */
 	@Override
 	public final ModelAndView handle(HttpServletRequest request, HttpServletResponse response, Object handler)

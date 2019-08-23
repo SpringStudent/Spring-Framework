@@ -367,27 +367,28 @@ public abstract class WebContentGenerator extends WebApplicationObjectSupport {
 
 
 	/**
-	 * Check the given request for supported methods and a required session, if any.
+	 * 检查给定的请求以获取支持的方法和必需的会话（如果有）。
 	 * @param request current HTTP request
 	 * @throws ServletException if the request cannot be handled because a check failed
 	 * @since 4.2
 	 */
 	protected final void checkRequest(HttpServletRequest request) throws ServletException {
 		// Check whether we should support the request method.
+		//我们不支持的请求类型抛出异常好了
 		String method = request.getMethod();
 		if (this.supportedMethods != null && !this.supportedMethods.contains(method)) {
 			throw new HttpRequestMethodNotSupportedException(method, this.supportedMethods);
 		}
 
 		// Check whether a session is required.
+		//如果需要session但是request没有session 抛出异常
 		if (this.requireSession && request.getSession(false) == null) {
 			throw new HttpSessionRequiredException("Pre-existing session required but none found");
 		}
 	}
 
 	/**
-	 * Prepare the given response according to the settings of this generator.
-	 * Applies the number of cache seconds specified for this generator.
+	 * 根据此设置准备给定的响应应用为此生成器指定的缓存秒数。
 	 * @param response current HTTP response
 	 * @since 4.2
 	 */
@@ -406,7 +407,7 @@ public abstract class WebContentGenerator extends WebApplicationObjectSupport {
 	}
 
 	/**
-	 * Set the HTTP Cache-Control header according to the given settings.
+	 * 根据给定的设置设置HTTP Cache-Control标头。
 	 * @param response current HTTP response
 	 * @param cacheControl the pre-configured cache control settings
 	 * @since 4.2
@@ -429,10 +430,8 @@ public abstract class WebContentGenerator extends WebApplicationObjectSupport {
 	}
 
 	/**
-	 * Apply the given cache seconds and generate corresponding HTTP headers,
-	 * i.e. allow caching for the given number of seconds in case of a positive
-	 * value, prevent caching if given a 0 value, do nothing else.
-	 * Does not tell the browser to revalidate the resource.
+	 * 应用给定的缓存秒并生成相应的HTTP头，即在正值的情况下允许缓存给定的秒数，如果给定0值则阻止缓存，不执行任何其他操作。
+	 * 不告诉浏览器重新验证资源。
 	 * @param response current HTTP response
 	 * @param cacheSeconds positive number of seconds into the future that the
 	 * response should be cacheable for, 0 to prevent caching

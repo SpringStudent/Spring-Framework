@@ -25,11 +25,12 @@ import java.lang.annotation.Target;
 import org.springframework.core.annotation.AliasFor;
 
 /**
- * Annotation to bind a method parameter to a session attribute.
+ * 用于将方法参数绑定到会话属性的注释。
  *
  * <p>The main motivation is to provide convenient access to existing, permanent
  * session attributes (e.g. user authentication object) with an optional/required
  * check and a cast to the target method parameter type.
+ *
  *
  * <p>For use cases that require adding or removing session attributes consider
  * injecting {@code org.springframework.web.context.request.WebRequest} or

@@ -32,14 +32,13 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.HandlerMethod;
 
 /**
- * Provides a method for invoking the handler method for a given request after resolving its
- * method argument values through registered {@link HandlerMethodArgumentResolver}s.
+ * 提供了在使用注册的{@link HandlerMethodArgumentResolver}s解析方法参数后调用handler method
+ * 的方法
  *
- * <p>Argument resolution often requires a {@link WebDataBinder} for data binding or for type
- * conversion. Use the {@link #setDataBinderFactory(WebDataBinderFactory)} property to supply
- * a binder factory to pass to argument resolvers.
+ * <p>参数解析通常需要{@link WebDataBinder}来进行数据绑定或类型转换。
+ * 使用{@link #setDataBinderFactory（WebDataBinderFactory）}属性提供绑定器工厂以传递给参数解析器。
  *
- * <p>Use {@link #setHandlerMethodArgumentResolvers} to customize the list of argument resolvers.
+ * <p>使用{@link #setHandlerMethodArgumentResolvers}解析器解析自定义参数列表。
  *
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller
@@ -109,8 +108,8 @@ public class InvocableHandlerMethod extends HandlerMethod {
 
 
 	/**
-	 * Invoke the method after resolving its argument values in the context of the given request.
-	 * <p>Argument values are commonly resolved through {@link HandlerMethodArgumentResolver}s.
+	 * 在给定请求的上下文中解析其参数值后调用该方法。
+	 * <p>参数值通常通过{@link HandlerMethodArgumentResolver}来解决。
 	 * The {@code providedArgs} parameter however may supply argument values to be used directly,
 	 * i.e. without argument resolution. Examples of provided argument values include a
 	 * {@link WebDataBinder}, a {@link SessionStatus}, or a thrown exception instance.
@@ -124,12 +123,13 @@ public class InvocableHandlerMethod extends HandlerMethod {
 	 */
 	public Object invokeForRequest(NativeWebRequest request, ModelAndViewContainer mavContainer,
 			Object... providedArgs) throws Exception {
-
+		// 将request中的参数转换为当前handler的参数形式
 		Object[] args = getMethodArgumentValues(request, mavContainer, providedArgs);
 		if (logger.isTraceEnabled()) {
 			logger.trace("Invoking '" + ClassUtils.getQualifiedMethodName(getMethod(), getBeanType()) +
 					"' with arguments " + Arrays.toString(args));
 		}
+		// 这里doInvoke()方法主要是结合处理后的参数，使用反射对目标方法进行调用
 		Object returnValue = doInvoke(args);
 		if (logger.isTraceEnabled()) {
 			logger.trace("Method [" + ClassUtils.getQualifiedMethodName(getMethod(), getBeanType()) +
@@ -139,20 +139,26 @@ public class InvocableHandlerMethod extends HandlerMethod {
 	}
 
 	/**
-	 * Get the method argument values for the current request.
+	 *获取当前请求的方法参数值。
 	 */
 	private Object[] getMethodArgumentValues(NativeWebRequest request, ModelAndViewContainer mavContainer,
 			Object... providedArgs) throws Exception {
-
+		// 获取当前handler所声明的所有参数，主要包括参数名，参数类型，参数位置，所标注的注解等等属性
 		MethodParameter[] parameters = getMethodParameters();
 		Object[] args = new Object[parameters.length];
 		for (int i = 0; i < parameters.length; i++) {
 			MethodParameter parameter = parameters[i];
 			parameter.initParameterNameDiscovery(this.parameterNameDiscoverer);
+			//调用方提供了参数providedArgs;我们真正的请求处理是不会有providedArgs
+			//所以肯定为null
 			args[i] = resolveProvidedArgument(parameter, providedArgs);
 			if (args[i] != null) {
 				continue;
 			}
+			// 如果在调用方提供的参数中不能找到当前类型的参数值，则遍历Spring容器中所有的
+			// ArgumentResolver，判断哪种类型的Resolver支持对当前参数的解析，这里的判断
+			// 方式比较简单，比如RequestParamMethodArgumentResolver就是判断当前参数
+			// 是否使用@RequestParam注解进行了标注
 			if (this.argumentResolvers.supportsParameter(parameter)) {
 				try {
 					args[i] = this.argumentResolvers.resolveArgument(
@@ -166,6 +172,7 @@ public class InvocableHandlerMethod extends HandlerMethod {
 					throw ex;
 				}
 			}
+			//没有找到对参数的合适处理 抛出异常
 			if (args[i] == null) {
 				throw new IllegalStateException("Could not resolve method parameter at index " +
 						parameter.getParameterIndex() + " in " + parameter.getMethod().toGenericString() +
@@ -182,6 +189,7 @@ public class InvocableHandlerMethod extends HandlerMethod {
 
 	/**
 	 * Attempt to resolve a method parameter from the list of provided argument values.
+	 * 尝试从提供的参数值列表中解析方法参数。
 	 */
 	private Object resolveProvidedArgument(MethodParameter parameter, Object... providedArgs) {
 		if (providedArgs == null) {

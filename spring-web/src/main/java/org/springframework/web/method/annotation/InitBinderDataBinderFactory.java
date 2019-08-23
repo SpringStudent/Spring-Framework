@@ -29,8 +29,8 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.method.support.InvocableHandlerMethod;
 
 /**
- * Adds initialization to a WebDataBinder via {@code @InitBinder} methods.
  *
+ *通过{@code @InitBinder}方法向WebDataBinder添加初始化。
  * @author Rossen Stoyanchev
  * @since 3.1
  */

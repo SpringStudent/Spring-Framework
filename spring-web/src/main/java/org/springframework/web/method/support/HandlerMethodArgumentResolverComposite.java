@@ -107,7 +107,7 @@ public class HandlerMethodArgumentResolverComposite implements HandlerMethodArgu
 	}
 
 	/**
-	 * Iterate over registered {@link HandlerMethodArgumentResolver}s and invoke the one that supports it.
+	 * 迭代已注册的{@link HandlerMethodArgumentResolver}并调用支持它的那个。
 	 * @throws IllegalStateException if no suitable {@link HandlerMethodArgumentResolver} is found.
 	 */
 	@Override

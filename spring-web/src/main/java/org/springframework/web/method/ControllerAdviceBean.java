@@ -37,12 +37,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 /**
- * Encapsulates information about an {@linkplain ControllerAdvice @ControllerAdvice}
- * Spring-managed bean without necessarily requiring it to be instantiated.
+ * 封装有关{@linkplain ControllerAdvice @ControllerAdvice} Spring管理的bean的信息，而不必要求它实例化。
  *
- * <p>The {@link #findAnnotatedBeans(ApplicationContext)} method can be used to
- * discover such beans. However, a {@code ControllerAdviceBean} may be created
- * from any object, including ones without an {@code @ControllerAdvice}.
+ * <p>{@link #findAnnotatedBeans（ApplicationContext）}方法可用于发现此类bean。
+ * 但是，可以从任何对象创建{@code ControllerAdviceBean}，包括没有{@code @ControllerAdvice}的对象。
  *
  * @author Rossen Stoyanchev
  * @author Brian Clozel
@@ -206,9 +204,8 @@ public class ControllerAdviceBean implements Ordered {
 
 
 	/**
-	 * Find the names of beans annotated with
-	 * {@linkplain ControllerAdvice @ControllerAdvice} in the given
-	 * ApplicationContext and wrap them as {@code ControllerAdviceBean} instances.
+	 * 找到带{@linkplain ControllerAdvice @ControllerAdvice}注释的bean的名称
+	 * 在给定ApplicationContext中的并将它们包装为{@code ControllerAdviceBean}实例。
 	 */
 	public static List<ControllerAdviceBean> findAnnotatedBeans(ApplicationContext applicationContext) {
 		List<ControllerAdviceBean> beans = new ArrayList<ControllerAdviceBean>();

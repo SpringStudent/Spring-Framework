@@ -88,7 +88,7 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping i
 	}
 
 	/**
-	 * Whether to match to URLs irrespective of the presence of a trailing slash.
+	 * 是否匹配URL而不管是否存在尾部斜杠。
 	 */
 	public boolean useTrailingSlashMatch() {
 		return this.useTrailingSlashMatch;
@@ -109,7 +109,7 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping i
 	}
 
 	/**
-	 * Look up a handler for the URL path of the given request.
+	 * 查找给定请求的URL路径的处理程序。
 	 * @param request current HTTP request
 	 * @return the handler instance, or {@code null} if none found
 	 */
@@ -121,9 +121,11 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping i
 			// We need to care for the default handler directly, since we need to
 			// expose the PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE for it as well.
 			Object rawHandler = null;
+			//根处理器
 			if ("/".equals(lookupPath)) {
 				rawHandler = getRootHandler();
 			}
+			//默认的处理器
 			if (rawHandler == null) {
 				rawHandler = getDefaultHandler();
 			}
@@ -147,12 +149,10 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping i
 	}
 
 	/**
-	 * Look up a handler instance for the given URL path.
-	 * <p>Supports direct matches, e.g. a registered "/test" matches "/test",
-	 * and various Ant-style pattern matches, e.g. a registered "/t*" matches
-	 * both "/test" and "/team". For details, see the AntPathMatcher class.
-	 * <p>Looks for the most exact pattern, where most exact is defined as
-	 * the longest path pattern.
+	 * 查找给定URL路径的处理程序实例。
+	 * <p>支持直接匹配，例如 注册的“/ test”匹配“/ test”，
+	 *   和各种Ant风格的模式匹配，例如 注册的“/ t *”匹配“/ test”和“/ team”。 有关详细信息，请参阅AntPathMatcher类。
+	 * <p>寻找最精确的模式，其中最精确的定义为最长的路径模式。
 	 * @param urlPath the URL the bean is mapped to
 	 * @param request current HTTP request (to expose the path within the mapping to)
 	 * @return the associated handler instance, or {@code null} if not found
@@ -161,6 +161,7 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping i
 	 */
 	protected Object lookupHandler(String urlPath, HttpServletRequest request) throws Exception {
 		// Direct match?
+		//通过url直接能查找到Handler
 		Object handler = this.handlerMap.get(urlPath);
 		if (handler != null) {
 			// Bean name or resolved handler?
@@ -173,6 +174,7 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping i
 		}
 
 		// Pattern match?
+		// 使用pathMatcher查找Handler
 		List<String> matchingPatterns = new ArrayList<String>();
 		for (String registeredPattern : this.handlerMap.keySet()) {
 			if (getPathMatcher().match(registeredPattern, urlPath)) {
@@ -304,7 +306,7 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping i
 	}
 
 	/**
-	 * Register the specified handler for the given URL paths.
+	 * 为给定的URL路径注册指定的处理程序。
 	 * @param urlPaths the URLs that the bean should be mapped to
 	 * @param beanName the name of the handler bean
 	 * @throws BeansException if the handler couldn't be registered
@@ -318,7 +320,7 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping i
 	}
 
 	/**
-	 * Register the specified handler for the given URL path.
+	 * 注册给定URL路径的指定处理程序。
 	 * @param urlPath the URL the bean should be mapped to
 	 * @param handler the handler instance or handler bean name String
 	 * (a bean name will automatically be resolved into the corresponding handler bean)
@@ -331,15 +333,17 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping i
 		Object resolvedHandler = handler;
 
 		// Eagerly resolve handler if referencing singleton via name.
+		// 如果通过名称引用singleton，则急切地解析处理程序。
 		if (!this.lazyInitHandlers && handler instanceof String) {
 			String handlerName = (String) handler;
 			if (getApplicationContext().isSingleton(handlerName)) {
 				resolvedHandler = getApplicationContext().getBean(handlerName);
 			}
 		}
-
+		//获取该url的处理器handler
 		Object mappedHandler = this.handlerMap.get(urlPath);
 		if (mappedHandler != null) {
+			//如果该url已经有处理起了 抛出异常
 			if (mappedHandler != resolvedHandler) {
 				throw new IllegalStateException(
 						"Cannot map " + getHandlerDescription(handler) + " to URL path [" + urlPath +
@@ -360,6 +364,7 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping i
 				setDefaultHandler(resolvedHandler);
 			}
 			else {
+				//保存到handlerMap中
 				this.handlerMap.put(urlPath, resolvedHandler);
 				if (logger.isInfoEnabled()) {
 					logger.info("Mapped URL path [" + urlPath + "] onto " + getHandlerDescription(handler));

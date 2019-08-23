@@ -45,14 +45,11 @@ import org.springframework.web.method.support.InvocableHandlerMethod;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 /**
- * Assist with initialization of the {@link Model} before controller method
- * invocation and with updates to it after the invocation.
+ * 在控制器方法之前协助初始化{@link Model} 调用之后调用它并对其进行更新。
  *
- * <p>On initialization the model is populated with attributes temporarily stored
- * in the session and through the invocation of {@code @ModelAttribute} methods.
+ * <p>在初始化时，模型将使用临时存储在会话中的属性以及{@code @ModelAttribute}方法的调用进行填充。
  *
- * <p>On update model attributes are synchronized with the session and also
- * {@link BindingResult} attributes are added if missing.
+ * <p>在更新模型上，属性与会话同步，如果缺少，还会添加{@link BindingResult}属性。
  *
  * @author Rossen Stoyanchev
  * @since 3.1
@@ -88,9 +85,9 @@ public final class ModelFactory {
 
 
 	/**
-	 * Populate the model in the following order:
+	 * 按以下顺序填充模型：
 	 * <ol>
-	 * <li>Retrieve "known" session attributes listed as {@code @SessionAttributes}.
+	 * <li>检索列为{@code @SessionAttributes}的“已知”会话属性。
 	 * <li>Invoke {@code @ModelAttribute} methods
 	 * <li>Find {@code @ModelAttribute} method arguments also listed as
 	 * {@code @SessionAttributes} and ensure they're present in the model raising
@@ -103,8 +100,9 @@ public final class ModelFactory {
 	 */
 	public void initModel(NativeWebRequest request, ModelAndViewContainer container, HandlerMethod handlerMethod)
 			throws Exception {
-
+		//获取request的sessionAttributesHandler
 		Map<String, ?> sessionAttributes = this.sessionAttributesHandler.retrieveAttributes(request);
+		// 将@SessionAttribute声明的参数封装到ModelAndViewContainer中
 		container.mergeAttributes(sessionAttributes);
 		invokeModelAttributeMethods(request, container);
 
@@ -120,14 +118,16 @@ public final class ModelFactory {
 	}
 
 	/**
-	 * Invoke model attribute methods to populate the model.
-	 * Attributes are added only if not already present in the model.
+	 * 调用模型属性方法以填充模型。 仅当模型中尚未存在属性时才添加属性。
 	 */
 	private void invokeModelAttributeMethods(NativeWebRequest request, ModelAndViewContainer container)
 			throws Exception {
 
 		while (!this.modelMethods.isEmpty()) {
 			InvocableHandlerMethod modelMethod = getNextModelMethod(container).getHandlerMethod();
+			// 获取当前方法中标注的ModelAttribute属性，然后判断当前request中是否有与该属性中name字段
+			// 标注的值相同的属性，如果存在，并且当前ModelAttribute设置了不对该属性进行绑定，那么
+			// 就直接略过当前方法的执行
 			ModelAttribute ann = modelMethod.getMethodAnnotation(ModelAttribute.class);
 			if (container.containsAttribute(ann.name())) {
 				if (!ann.binding()) {
@@ -135,13 +135,16 @@ public final class ModelFactory {
 				}
 				continue;
 			}
-
+			// 通过ArgumentResolver对方法参数进行处理，并且调用目标方法
 			Object returnValue = modelMethod.invokeForRequest(request, container);
+			// 如果当前方法的返回值不为空，则判断当前@ModelAttribute是否设置了需要绑定返回值，
+			// 如果设置了，则将返回值绑定到请求中，后续handler可以直接使用该参数
 			if (!modelMethod.isVoid()){
 				String returnValueName = getNameForReturnValue(returnValue, modelMethod.getReturnType());
 				if (!ann.binding()) {
 					container.setBindingDisabled(returnValueName);
 				}
+				// 如果request中不包含该参数，则将该返回值添加到ModelAndViewContainer中，
 				if (!container.containsAttribute(returnValueName)) {
 					container.addAttribute(returnValueName, returnValue);
 				}

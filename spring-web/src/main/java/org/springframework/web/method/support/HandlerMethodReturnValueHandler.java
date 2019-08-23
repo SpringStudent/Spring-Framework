@@ -20,8 +20,8 @@ import org.springframework.core.MethodParameter;
 import org.springframework.web.context.request.NativeWebRequest;
 
 /**
- * Strategy interface to handle the value returned from the invocation of a
- * handler method .
+ *
+ * 处理由处理程序的调用返回值的策略接口
  *
  * @author Arjen Poutsma
  * @since 3.1
@@ -30,8 +30,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 public interface HandlerMethodReturnValueHandler {
 
 	/**
-	 * Whether the given {@linkplain MethodParameter method return type} is
-	 * supported by this handler.
+	 * 给定的{@linkplain MethodParameter return tpye方法}是否被当前处理器支持
+	 * {@linkplain MethodParameter 方法返回类型}是否支持该handler
 	 * @param returnType the method return type to check
 	 * @return {@code true} if this handler supports the supplied return type;
 	 * {@code false} otherwise
@@ -39,10 +39,8 @@ public interface HandlerMethodReturnValueHandler {
 	boolean supportsReturnType(MethodParameter returnType);
 
 	/**
-	 * Handle the given return value by adding attributes to the model and
-	 * setting a view or setting the
-	 * {@link ModelAndViewContainer#setRequestHandled} flag to {@code true}
-	 * to indicate the response has been handled directly.
+	 * 通过添加model的属性和设置视图处理返回值或者设置{@link ModelAndViewContainer#setRequestHandled}
+	 * 标识为true去表示相应已被直接处理
 	 * @param returnValue the value returned from the handler method
 	 * @param returnType the type of the return value. This type must have
 	 * previously been passed to {@link #supportsReturnType} which must

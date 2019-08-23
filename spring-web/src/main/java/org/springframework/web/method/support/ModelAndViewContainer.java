@@ -33,14 +33,12 @@ import org.springframework.web.bind.support.SimpleSessionStatus;
  * {@link HandlerMethodReturnValueHandler}s during the course of invocation of
  * a controller method.
  *
- * <p>The {@link #setRequestHandled} flag can be used to indicate the request
- * has been handled directly and view resolution is not required.
+ * <p>{@link #setRequestHandled}标志可用于指示已直接处理请求并且不需要视图解析。
  *
- * <p>A default {@link Model} is automatically created at instantiation.
- * An alternate model instance may be provided via {@link #setRedirectModel}
- * for use in a redirect scenario. When {@link #setRedirectModelScenario} is set
- * to {@code true} signalling a redirect scenario, the {@link #getModel()}
- * returns the redirect model instead of the default model.
+ * <p>在实例化时自动创建默认的{@link Model}。
+ *  在重定向场景可以通过{@link #setRedirectModel}方法提供一个alternate的model.
+ * 当{@link #setRedirectModelScenario}设置为true标识是重定向场景,
+ * {@link #getModel（）}返回重定向模型而不是默认模型。
  *
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller

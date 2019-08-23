@@ -38,10 +38,8 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.util.NestedServletException;
 
 /**
- * Extends {@link InvocableHandlerMethod} with the ability to handle return
- * values through a registered {@link HandlerMethodReturnValueHandler} and
- * also supports setting the response status based on a method-level
- * {@code @ResponseStatus} annotation.
+ * 扩展{@link InvocableHandlerMethod}，能够通过已注册的{@link HandlerMethodReturnValueHandler}处理返回值，
+ * 还支持根据方法级{@code @ResponseStatus}注释设置响应状态。
  *
  * <p>A {@code null} return value (including void) may be interpreted as the
  * end of request processing in combination with a {@code @ResponseStatus}
@@ -85,18 +83,18 @@ public class ServletInvocableHandlerMethod extends InvocableHandlerMethod {
 
 
 	/**
-	 * Invoke the method and handle the return value through one of the
-	 * configured {@link HandlerMethodReturnValueHandler}s.
+	 * 调用方法，并使用一个配置的{@link HandlerMethodReturnValueHandler}s处理返回值
 	 * @param webRequest the current request
 	 * @param mavContainer the ModelAndViewContainer for this request
 	 * @param providedArgs "given" arguments matched by type (not resolved)
 	 */
 	public void invokeAndHandle(ServletWebRequest webRequest, ModelAndViewContainer mavContainer,
 			Object... providedArgs) throws Exception {
-
+		// 对目标handler的参数进行处理，并且调用目标handler
 		Object returnValue = invokeForRequest(webRequest, mavContainer, providedArgs);
+		// 设置相关的返回状态
 		setResponseStatus(webRequest);
-
+		// 如果请求处理完成，则设置requestHandled属性
 		if (returnValue == null) {
 			if (isRequestNotModified(webRequest) || getResponseStatus() != null || mavContainer.isRequestHandled()) {
 				mavContainer.setRequestHandled(true);
@@ -104,12 +102,15 @@ public class ServletInvocableHandlerMethod extends InvocableHandlerMethod {
 			}
 		}
 		else if (StringUtils.hasText(getResponseStatusReason())) {
+			// 如果请求失败，但是有错误原因，那么也会设置requestHandled属性
 			mavContainer.setRequestHandled(true);
 			return;
 		}
 
 		mavContainer.setRequestHandled(false);
 		try {
+			// 遍历当前容器中所有ReturnValueHandler，判断哪种handler支持当前返回值的处理，
+			// 如果支持，则使用该handler处理该返回值
 			this.returnValueHandlers.handleReturnValue(
 					returnValue, getReturnValueType(returnValue), mavContainer, webRequest);
 		}

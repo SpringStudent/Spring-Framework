@@ -5,7 +5,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 
-    <mvc:annotation-driven />
+    <mvc:annotation-driven>
+    </mvc:annotation-driven>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
             <property name="maxUploadSize" value="10000"/>
@@ -31,4 +32,7 @@
     </bean>
     <bean id="userController" class="org.springframework.studymvc.web.UserController"/>
     <bean id="userController2" class="org.springframework.studymvc.web.UserController2"/>
+
+    <bean id="beanNameUrlHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+    <bean name="/user.do" class="org.springframework.studymvc.web.UserController3"/>
 </beans>

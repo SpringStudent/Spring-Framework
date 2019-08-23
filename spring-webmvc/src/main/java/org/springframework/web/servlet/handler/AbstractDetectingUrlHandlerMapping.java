@@ -47,8 +47,7 @@ public abstract class AbstractDetectingUrlHandlerMapping extends AbstractUrlHand
 
 
 	/**
-	 * Calls the {@link #detectHandlers()} method in addition to the
-	 * superclass's initialization.
+	 * 除了超类的初始化之外，还调用{@link #detectHandlers（）}方法
 	 */
 	@Override
 	public void initApplicationContext() throws ApplicationContextException {
@@ -57,10 +56,9 @@ public abstract class AbstractDetectingUrlHandlerMapping extends AbstractUrlHand
 	}
 
 	/**
-	 * Register all handlers found in the current ApplicationContext.
-	 * <p>The actual URL determination for a handler is up to the concrete
-	 * {@link #determineUrlsForHandler(String)} implementation. A bean for
-	 * which no such URLs could be determined is simply not considered a handler.
+	 * 注册当前ApplicationContext中找到的所有处理程序。
+	 * <p>处理程序的实际URL确定取决于具体情况
+	 *   {@link #determineUrlsForHandler（String）}实现。 没有这样的URL可以确定的bean根本不被认为是处理程序。
 	 * @throws org.springframework.beans.BeansException if the handler couldn't be registered
 	 * @see #determineUrlsForHandler(String)
 	 */
@@ -71,9 +69,8 @@ public abstract class AbstractDetectingUrlHandlerMapping extends AbstractUrlHand
 		String[] beanNames = (this.detectHandlersInAncestorContexts ?
 				BeanFactoryUtils.beanNamesForTypeIncludingAncestors(getApplicationContext(), Object.class) :
 				getApplicationContext().getBeanNamesForType(Object.class));
-
-		// Take any bean name that we can determine URLs for.
 		for (String beanName : beanNames) {
+			//查找给定beanName的所有url
 			String[] urls = determineUrlsForHandler(beanName);
 			if (!ObjectUtils.isEmpty(urls)) {
 				// URL paths found: Let's consider it a handler.

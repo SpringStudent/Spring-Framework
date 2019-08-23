@@ -380,12 +380,10 @@ public abstract class WebUtils {
 	}
 
 	/**
-	 * Return the best available mutex for the given session:
-	 * that is, an object to synchronize on for the given session.
-	 * <p>Returns the session mutex attribute if available; usually,
-	 * this means that the HttpSessionMutexListener needs to be defined
-	 * in {@code web.xml}. Falls back to the HttpSession itself
-	 * if no mutex attribute found.
+	 * 返回给定会话的最佳可用互斥锁：也就是说，为给定会话同步的对象。
+	 * <p>返回会话互斥锁属性（如果可用）;通常情况下，
+	 *   这意味着需要定义HttpSessionMutexListener
+	 * 在{@code web.xml}中。 如果没有找到互斥锁属性，则回退到HttpSession本身。
 	 * <p>The session mutex is guaranteed to be the same object during
 	 * the entire lifetime of the session, available under the key defined
 	 * by the {@code SESSION_MUTEX_ATTRIBUTE} constant. It serves as a
@@ -412,6 +410,9 @@ public abstract class WebUtils {
 	/**
 	 * Return an appropriate request object of the specified type, if available,
 	 * unwrapping the given request as far as necessary.
+	 *
+	 * 返回指定类型的适当请求对象（如果可用）
+	 * 尽可能地拆箱给定的请求。
 	 * @param request the servlet request to introspect
 	 * @param requiredType the desired type of request object
 	 * @return the matching request object, or {@code null} if none
@@ -452,11 +453,9 @@ public abstract class WebUtils {
 	}
 
 	/**
-	 * Determine whether the given request is an include request,
-	 * that is, not a top-level HTTP request coming in from the outside.
-	 * <p>Checks the presence of the "javax.servlet.include.request_uri"
-	 * request attribute. Could check any request attribute that is only
-	 * present in an include request.
+	 * 确定给定请求是否为包含请求，即不是从外部进入的顶级HTTP请求。
+	 * <p>检查是否存在“javax.servlet.include.request_uri”请求属性。
+	 * 可以检查任何请求的属于是否为include request
 	 * @param request current servlet request
 	 * @return whether the given request is an include request
 	 */

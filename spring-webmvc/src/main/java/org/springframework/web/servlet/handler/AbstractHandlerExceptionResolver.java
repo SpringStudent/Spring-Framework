@@ -128,7 +128,7 @@ public abstract class AbstractHandlerExceptionResolver implements HandlerExcepti
 	@Override
 	public ModelAndView resolveException(
 			HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-
+		//
 		if (shouldApplyTo(request, handler)) {
 			prepareResponse(ex, response);
 			ModelAndView result = doResolveException(request, response, handler, ex);

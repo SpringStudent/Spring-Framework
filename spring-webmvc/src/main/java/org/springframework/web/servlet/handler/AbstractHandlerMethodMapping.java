@@ -183,7 +183,7 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 	}
 
 	/**
-	 * Scan beans in the ApplicationContext, detect and register handler methods.
+	 * 在ApplicationContext中扫描bean，检测并注册处理程序方法。
 	 * @see #isHandler(Class)
 	 * @see #getMappingForMethod(Method, Class)
 	 * @see #handlerMethodsInitialized(Map)
@@ -195,7 +195,6 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 		String[] beanNames = (this.detectHandlerMethodsInAncestorContexts ?
 				BeanFactoryUtils.beanNamesForTypeIncludingAncestors(getApplicationContext(), Object.class) :
 				getApplicationContext().getBeanNamesForType(Object.class));
-
 		for (String beanName : beanNames) {
 			if (!beanName.startsWith(SCOPED_TARGET_NAME_PREFIX)) {
 				Class<?> beanType = null;
@@ -208,6 +207,7 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 						logger.debug("Could not resolve target class for bean with name '" + beanName + "'", ex);
 					}
 				}
+				//对应class类有@Controller或者@RequestMapping注解
 				if (beanType != null && isHandler(beanType)) {
 					detectHandlerMethods(beanName);
 				}
@@ -217,14 +217,15 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 	}
 
 	/**
-	 * Look for handler methods in a handler.
+	 * 在处理程序中查找处理程序方法。
 	 * @param handler the bean name of a handler or a handler instance
 	 */
 	protected void detectHandlerMethods(final Object handler) {
+		//处理器的类型如果是String类型，把该bean创建起来
 		Class<?> handlerType = (handler instanceof String ?
 				getApplicationContext().getType((String) handler) : handler.getClass());
 		final Class<?> userType = ClassUtils.getUserClass(handlerType);
-
+		//查找userType每个method方法上的@RequestMapping并映射成为{@link RequestMappingInfo}
 		Map<Method, T> methods = MethodIntrospector.selectMethods(userType,
 				new MethodIntrospector.MetadataLookup<T>() {
 					@Override
@@ -242,16 +243,17 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 		if (logger.isDebugEnabled()) {
 			logger.debug(methods.size() + " request handler methods found on " + userType + ": " + methods);
 		}
+		//遍历每个methods
 		for (Map.Entry<Method, T> entry : methods.entrySet()) {
 			Method invocableMethod = AopUtils.selectInvocableMethod(entry.getKey(), userType);
+			//方法上用于映射请求处理的的元数据
 			T mapping = entry.getValue();
 			registerHandlerMethod(handler, invocableMethod, mapping);
 		}
 	}
 
 	/**
-	 * Register a handler method and its unique mapping. Invoked at startup for
-	 * each detected handler method.
+	 * 注册处理程序方法及其唯一映射。 在启动时为每个检测到的处理程序方法调用。
 	 * @param handler the bean name of the handler or the handler instance
 	 * @param method the method to register
 	 * @param mapping the mapping conditions associated with the handler method
@@ -263,7 +265,8 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 	}
 
 	/**
-	 * Create the HandlerMethod instance.
+	 *
+	 * 创建一个HandlerMethod实例。
 	 * @param handler either a bean name or an actual handler instance
 	 * @param method the target method
 	 * @return the created HandlerMethod
@@ -299,7 +302,7 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 	// Handler method lookup
 
 	/**
-	 * Look up a handler method for the given request.
+	 * 查找给定请求的处理程序方法。
 	 */
 	@Override
 	protected HandlerMethod getHandlerInternal(HttpServletRequest request) throws Exception {
@@ -307,6 +310,7 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 		if (logger.isDebugEnabled()) {
 			logger.debug("Looking up handler method for path " + lookupPath);
 		}
+		//加上读锁
 		this.mappingRegistry.acquireReadLock();
 		try {
 			HandlerMethod handlerMethod = lookupHandlerMethod(lookupPath, request);
@@ -321,13 +325,13 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 			return (handlerMethod != null ? handlerMethod.createWithResolvedBean() : null);
 		}
 		finally {
+			//释放读锁
 			this.mappingRegistry.releaseReadLock();
 		}
 	}
 
 	/**
-	 * Look up the best-matching handler method for the current request.
-	 * If multiple matches are found, the best match is selected.
+	 * 查找当前请求的最佳匹配处理程序方法。如果找到多个匹配项，则选择最佳匹配项。
 	 * @param lookupPath mapping lookup path within the current servlet mapping
 	 * @param request the current request
 	 * @return the best-matching handler method, or {@code null} if no match
@@ -336,7 +340,9 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 	 */
 	protected HandlerMethod lookupHandlerMethod(String lookupPath, HttpServletRequest request) throws Exception {
 		List<Match> matches = new ArrayList<Match>();
+		//获取到了@RequestMapping注解产生的RequestMappingInfo数据
 		List<T> directPathMatches = this.mappingRegistry.getMappingsByUrl(lookupPath);
+		//如果不为null
 		if (directPathMatches != null) {
 			addMatchingMappings(directPathMatches, matches, request);
 		}
@@ -344,7 +350,7 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 			// No choice but to go through all mappings...
 			addMatchingMappings(this.mappingRegistry.getMappings().keySet(), matches, request);
 		}
-
+		//如果不为空
 		if (!matches.isEmpty()) {
 			Comparator<Match> comparator = new MatchComparator(getMappingComparator(request));
 			Collections.sort(matches, comparator);
@@ -378,6 +384,7 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 		for (T mapping : mappings) {
 			T match = getMatchingMapping(mapping, request);
 			if (match != null) {
+				//添加到Mathe类型的集合中
 				matches.add(new Match(match, this.mappingRegistry.getMappings().get(mapping)));
 			}
 		}
@@ -433,8 +440,8 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 	protected abstract boolean isHandler(Class<?> beanType);
 
 	/**
-	 * Provide the mapping for a handler method. A method for which no
-	 * mapping can be provided is not a handler method.
+	 * 提供处理程序方法的映射。 一种方法，没有
+	 * 可以提供的映射不是处理程序方法。
 	 * @param method the method to provide a mapping for
 	 * @param handlerType the handler type, possibly a sub-type of the method's
 	 * declaring class
@@ -466,13 +473,15 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 
 
 	/**
-	 * A registry that maintains all mappings to handler methods, exposing methods
-	 * to perform lookups and providing concurrent access.
 	 *
+	 * 一个注册表，用于维护处理程序方法的所有映射，公开执行查找和提供并发访问的方法。
 	 * <p>Package-private for testing purposes.
 	 */
 	class MappingRegistry {
 
+		/**
+		 * key-RequestMappingInfo value-MappingRegistration
+		 */
 		private final Map<T, MappingRegistration<T>> registry = new HashMap<T, MappingRegistration<T>>();
 
 		private final Map<T, HandlerMethod> mappingLookup = new LinkedHashMap<T, HandlerMethod>();
@@ -533,18 +542,23 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 		}
 
 		public void register(T mapping, Object handler, Method method) {
+			//加写锁
 			this.readWriteLock.writeLock().lock();
 			try {
+				//创建HandlerMethod实例
 				HandlerMethod handlerMethod = createHandlerMethod(handler, method);
+				//确定RequestMappingInfo唯一
 				assertUniqueMethodMapping(handlerMethod, mapping);
 
 				if (logger.isInfoEnabled()) {
 					logger.info("Mapped \"" + mapping + "\" onto " + handlerMethod);
 				}
+				//保存到mappingLookUp
 				this.mappingLookup.put(mapping, handlerMethod);
-
+				//获取mapping的urls
 				List<String> directUrls = getDirectUrls(mapping);
 				for (String url : directUrls) {
+					//保存到urlLookUp
 					this.urlLookup.add(url, mapping);
 				}
 
@@ -567,6 +581,7 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 		}
 
 		private void assertUniqueMethodMapping(HandlerMethod newHandlerMethod, T mapping) {
+			//指定的mapping存在了
 			HandlerMethod handlerMethod = this.mappingLookup.get(mapping);
 			if (handlerMethod != null && !handlerMethod.equals(newHandlerMethod)) {
 				throw new IllegalStateException(
@@ -707,8 +722,7 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 
 
 	/**
-	 * A thin wrapper around a matched HandlerMethod and its mapping, for the purpose of
-	 * comparing the best match with a comparator in the context of the current request.
+	 * 围绕匹配的HandlerMethod及其映射的包装，用于在当前请求的上下文中比较最佳匹配与比较器。
 	 */
 	private class Match {
 

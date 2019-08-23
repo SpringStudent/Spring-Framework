@@ -8,4 +8,5 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <bean id="servletRequestHandledEventListener" class="org.springframework.studymvc.event.ServletRequestHandledEventListener"/>
 </beans>

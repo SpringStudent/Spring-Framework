@@ -36,8 +36,7 @@ import org.springframework.web.context.request.async.DeferredResult.DeferredResu
 import org.springframework.web.util.UrlPathHelper;
 
 /**
- * The central class for managing asynchronous request processing, mainly intended
- * as an SPI and not typically used directly by application classes.
+ *  用于管理异步请求处理的中心类，主要用作SPI，通常不由应用程序类直接使用。
  *
  * <p>An async scenario starts with request processing as usual in a thread (T1).
  * Concurrent request handling can be initiated by calling
@@ -49,6 +48,13 @@ import org.springframework.web.util.UrlPathHelper;
  * result can be accessed via {@link #getConcurrentResult()} or its presence
  * detected via {@link #hasConcurrentResult()}.
  *
+ * 请求的异步处理像平时一样开始与一个线程(T1)
+ * 可以通过调用启动并发请求处理
+ * {@link #startCallableProcessing（Callable，Object ...）startCallableProcessing}或
+ * {@link #startDeferredResultProcessing（DeferredResult，Object ...）startDeferredResultProcessing}，两者都在单独的线程（T2）中产生结果。
+ * 保存结果并将请求分派给容器，以便在第三个线程（T3）中恢复已保存结果的处理。
+ * 在调度的线程（T3）内，保存
+ * 结果可以通过{@link #getConcurrentResult（）}访问，或通过{@link #hasConcurrentResult（）}检测到它的存在。
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller
  * @since 3.2
@@ -126,19 +132,16 @@ public final class WebAsyncManager {
 	}
 
 	/**
-	 * Whether the selected handler for the current request chose to handle the
-	 * request asynchronously. A return value of "true" indicates concurrent
-	 * handling is under way and the response will remain open. A return value
-	 * of "false" means concurrent handling was either not started or possibly
-	 * that it has completed and the request was dispatched for further
-	 * processing of the concurrent result.
+	 * 当前请求的所选处理程序是否选择异步处理请求。
+	 * 返回值“true”表示并发处理正在进行中，响应将保持开放。
+	 * 返回值“false”表示并发处理未启动或可能已完成，并且已分派请求以进一步处理并发结果。
 	 */
 	public boolean isConcurrentHandlingStarted() {
 		return (this.asyncWebRequest != null && this.asyncWebRequest.isAsyncStarted());
 	}
 
 	/**
-	 * Whether a result value exists as a result of concurrent handling.
+	 *结果值是否因并发处理而存在。
 	 */
 	public boolean hasConcurrentResult() {
 		return (this.concurrentResult != RESULT_NONE);

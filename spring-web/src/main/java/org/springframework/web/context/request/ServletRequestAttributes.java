@@ -30,10 +30,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.util.WebUtils;
 
 /**
- * Servlet-based implementation of the {@link RequestAttributes} interface.
- *
- * <p>Accesses objects from servlet request and HTTP session scope,
- * with no distinction between "session" and "global session".
+ * 基于Servlet的{@link RequestAttributes}接口实现。
+ * 从servlet请求和HTTP会话范围访问对象，
+ * 没有“session”和“global session”之间的区别。
+ * <p>
  *
  * @author Juergen Hoeller
  * @since 2.0

@@ -32,15 +32,12 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
 /**
- * Manages controller-specific session attributes declared via
- * {@link SessionAttributes @SessionAttributes}. Actual storage is
- * delegated to a {@link SessionAttributeStore} instance.
+ * 管理通过{@link SessionAttributes @SessionAttributes}声明的特定于控制器的会话属性。
+ * 实际存储委托给{@link SessionAttributeStore}实例。
  *
- * <p>When a controller annotated with {@code @SessionAttributes} adds
- * attributes to its model, those attributes are checked against names and
- * types specified via {@code @SessionAttributes}. Matching model attributes
- * are saved in the HTTP session and remain there until the controller calls
- * {@link SessionStatus#setComplete()}.
+ * 当一个使用了{@code @SessionAttributes}注解的控制器添加attributes到Model时，
+ * 将根据通过{@code @SessionAttributes}指定的名称和类型检查这些属性。
+ * 匹配的模型属性保存在HTTP session中并保持不变，直到控制器调用{@link SessionStatus＃setComplete（）}。
  *
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller
@@ -59,9 +56,7 @@ public class SessionAttributesHandler {
 
 
 	/**
-	 * Create a new session attributes handler. Session attribute names and types
-	 * are extracted from the {@code @SessionAttributes} annotation, if present,
-	 * on the given type.
+	 * 创建新的会话属性处理程序。 会话属性名称和类型是从给定类型的{@code @SessionAttributes}注释中提取的（如果存在）。
 	 * @param handlerType the controller type
 	 * @param sessionAttributeStore used for session access
 	 */

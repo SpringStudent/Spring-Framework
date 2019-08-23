@@ -1,9 +1,6 @@
 package org.springframework.studymvc.web;
 
 import org.springframework.studymvc.model.User;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -14,11 +11,9 @@ import java.util.List;
 
 /**
  * @author 周宁
- * @Date 2019-08-09 9:11
+ * @Date 2019-08-21 10:46
  */
-@SessionAttributes
-public class UserController  extends AbstractController {
-
+public class UserController3 extends AbstractController {
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<User> users = new ArrayList<User>();
@@ -30,6 +25,5 @@ public class UserController  extends AbstractController {
         u2.setUsername("周宁");
         users.add(u1);
         users.add(u2);
-        return new ModelAndView("userlist","users",users);
-    }
+        return new ModelAndView("userlist","users",users);    }
 }

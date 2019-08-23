@@ -34,16 +34,14 @@ import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Encapsulates information about a handler method consisting of a
- * {@linkplain #getMethod() method} and a {@linkplain #getBean() bean}.
- * Provides convenient access to method parameters, the method return value,
- * method annotations, etc.
+ * 封装有关由a组成的处理程序方法的信息
+ *   {@linkplain #getMethod（）方法}和{@linkplain #getBean（）bean}。
+ * 提供对方法参数，方法返回值，方法注释等的便捷访问。
  *
- * <p>The class may be created with a bean instance or with a bean name
- * (e.g. lazy-init bean, prototype bean). Use {@link #createWithResolvedBean()}
- * to obtain a {@code HandlerMethod} instance with a bean instance resolved
- * through the associated {@link BeanFactory}.
- *
+ * <p>可以使用bean实例或bean名称创建当前类型
+ *   （例如lazy-init bean，prototype bean）。
+ * 使用{@link #createWithResolvedBean（）}获取{@code HandlerMethod}实例，
+ * 并通过关联的{@link BeanFactory}解析bean实例。
  * @author Arjen Poutsma
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller

@@ -20,9 +20,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.context.request.WebRequest;
 
 /**
- * Default implementation of the {@link SessionAttributeStore} interface,
- * storing the attributes in the WebRequest session (i.e. HttpSession
- * or PortletSession).
+ * {@link SessionAttributeStore}接口的默认实现，将属性存储在WebRequest会话中（即HttpSession或PortletSession）。
  *
  * @author Juergen Hoeller
  * @since 2.5

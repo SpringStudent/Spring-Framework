@@ -32,7 +32,9 @@ import org.springframework.util.ReflectionUtils;
  * including interfaces and parent classes while also dealing with parameterized methods
  * as well as common scenarios encountered with interface and class-based proxies.
  *
- * <p>Typically, but not necessarily, used for finding annotated handler methods.
+ * 定义相关搜索方法元数据的算法包括接口和父类,同事还处理参数化方法以及接口和基于类的代理
+ *
+ * <p>通常但不一定用于查找带注释的处理程序方法。
  *
  * @author Juergen Hoeller
  * @author Rossen Stoyanchev
@@ -41,9 +43,8 @@ import org.springframework.util.ReflectionUtils;
 public abstract class MethodIntrospector {
 
 	/**
-	 * Select methods on the given target type based on the lookup of associated metadata.
-	 * <p>Callers define methods of interest through the {@link MetadataLookup} parameter,
-	 * allowing to collect the associated metadata into the result map.
+	 * 根据关联元数据的查找，选择给定目标类型的方法。
+	 * <p>调用者通过{@link MetadataLookup}参数定义感兴趣的方法，允许将关联的元数据收集到结果映射中。
 	 * @param targetType the target type to search methods on
 	 * @param metadataLookup a {@link MetadataLookup} callback to inspect methods of interest,
 	 * returning non-null metadata to be associated with a given method if there is a match,
@@ -55,13 +56,14 @@ public abstract class MethodIntrospector {
 		final Map<Method, T> methodMap = new LinkedHashMap<Method, T>();
 		Set<Class<?>> handlerTypes = new LinkedHashSet<Class<?>>();
 		Class<?> specificHandlerType = null;
-
+		//targetType不是代理类
 		if (!Proxy.isProxyClass(targetType)) {
 			handlerTypes.add(targetType);
 			specificHandlerType = targetType;
 		}
+		//待处理的types集合
 		handlerTypes.addAll(Arrays.asList(targetType.getInterfaces()));
-
+		//遍历handlerTypes
 		for (Class<?> currentHandlerType : handlerTypes) {
 			final Class<?> targetClass = (specificHandlerType != null ? specificHandlerType : currentHandlerType);
 
@@ -143,13 +145,13 @@ public abstract class MethodIntrospector {
 
 
 	/**
-	 * A callback interface for metadata lookup on a given method.
+	 * 用于给定方法的元数据查找的回调接口。
 	 * @param <T> the type of metadata returned
 	 */
 	public interface MetadataLookup<T> {
 
 		/**
-		 * Perform a lookup on the given method and return associated metadata, if any.
+		 * 对给定方法执行查找并返回关联的元数据（如果有）。
 		 * @param method the method to inspect
 		 * @return non-null metadata to be associated with a method if there is a match,
 		 * or {@code null} for no match

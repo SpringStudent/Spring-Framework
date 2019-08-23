@@ -32,13 +32,11 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 
 /**
- * Helper class for URL path matching. Provides support for URL paths in
- * {@code RequestDispatcher} includes and support for consistent URL decoding.
+ * URL路径匹配的助手类。 在{@code RequestDispatcher}中提供对URL路径的支持，包括并支持一致的URL解码。
  *
- * <p>Used by {@link org.springframework.web.servlet.handler.AbstractUrlHandlerMapping},
- * {@link org.springframework.web.servlet.mvc.multiaction.AbstractUrlMethodNameResolver}
- * and {@link org.springframework.web.servlet.support.RequestContext} for path matching
- * and/or URI determination.
+ * <p>由{@link org.springframework.web.servlet.handler.AbstractUrlHandlerMapping}
+ * {@link org.springframework.web.servlet.mvc.multiaction.AbstractUrlMethodNameResolver}和
+ * {@link org.springframework.web.servlet.support.RequestContext 用于路径匹配和/或URI确定使用
  *
  * @author Juergen Hoeller
  * @author Rob Harrop
@@ -156,6 +154,7 @@ public class UrlPathHelper {
 	/**
 	 * Return the mapping lookup path for the given request, within the current
 	 * servlet mapping if applicable, else within the web application.
+	 * 返回给定请求的映射查找路径，如果适用，则返回当前servlet映射，否则返回Web应用程序中。
 	 * <p>Detects include request URL if called within a RequestDispatcher include.
 	 * @param request current HTTP request
 	 * @return the lookup path

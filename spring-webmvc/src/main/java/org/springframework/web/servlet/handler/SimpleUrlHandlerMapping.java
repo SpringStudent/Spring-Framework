@@ -99,7 +99,7 @@ public class SimpleUrlHandlerMapping extends AbstractUrlHandlerMapping {
 	}
 
 	/**
-	 * Register all handlers specified in the URL map for the corresponding paths.
+	 * 注册URL映射中为相应路径指定的所有处理程序。
 	 * @param urlMap Map with URL paths as keys and handler beans or bean names as values
 	 * @throws BeansException if a handler couldn't be registered
 	 * @throws IllegalStateException if there is a conflicting handler registered

@@ -109,7 +109,7 @@ public class RequestMappingHandlerMapping extends RequestMappingInfoHandlerMappi
 	}
 
 	/**
-	 * Return the configured {@link ContentNegotiationManager}.
+	 * 返回已配置的{@link ContentNegotiationManager}。
 	 */
 	public ContentNegotiationManager getContentNegotiationManager() {
 		return this.contentNegotiationManager;
@@ -165,8 +165,8 @@ public class RequestMappingHandlerMapping extends RequestMappingInfoHandlerMappi
 
 	/**
 	 * {@inheritDoc}
-	 * <p>Expects a handler to have either a type-level @{@link Controller}
-	 * annotation or a type-level @{@link RequestMapping} annotation.
+	 * <p>期望处理程序具有类型级别@ {@link Controller}
+	 * 注释或类型级@ {@link RequestMapping}注释。
 	 */
 	@Override
 	protected boolean isHandler(Class<?> beanType) {
@@ -175,8 +175,7 @@ public class RequestMappingHandlerMapping extends RequestMappingInfoHandlerMappi
 	}
 
 	/**
-	 * Uses method and type-level @{@link RequestMapping} annotations to create
-	 * the RequestMappingInfo.
+	 * 使用方法和类型级别@ {@link RequestMapping}注释来创建RequestMappingInfo。
 	 * @return the created RequestMappingInfo, or {@code null} if the method
 	 * does not have a {@code @RequestMapping} annotation.
 	 * @see #getCustomMethodCondition(Method)

@@ -29,11 +29,9 @@ import org.springframework.web.servlet.ModelAndView;
  * 包含并委托对{@link HandlerInterceptor}的调用以及拦截器应该应用的包含（和可选地排除）路径模式。
  * 还提供匹配逻辑以测试拦截器是否适用于给定的请求路径。
  *
- * <p>A MappedInterceptor can be registered directly with any
- * {@link org.springframework.web.servlet.handler.AbstractHandlerMethodMapping}.
- * Furthermore, beans of type {@code MappedInterceptor} are automatically detected by
- * {@code AbstractHandlerMethodMapping} (including ancestor ApplicationContext's) which
- * effectively means the interceptor is registered "globally" with all handler mappings.
+ * <p>MappedInterceptor可以直接在任何{@link org.springframework.web.servlet.handler.AbstractHandlerMethodMapping}中注册。
+ * 此外，{@code MappedInterceptor}类型的bean由{@code AbstractHandlerMethodMapping}（包括祖先的ApplicationContext）自动检测，
+ * 这实际上意味着拦截器已“全局”注册到所有处理程序映射。
  *
  * @author Keith Donald
  * @author Rossen Stoyanchev
@@ -127,7 +125,7 @@ public final class MappedInterceptor implements HandlerInterceptor {
 
 
 	/**
-	 * Determine a match for the given lookup path.
+	 * 确定给定查找路径是否匹配
 	 * @param lookupPath the current request path
 	 * @param pathMatcher a path matcher for path pattern matching
 	 */

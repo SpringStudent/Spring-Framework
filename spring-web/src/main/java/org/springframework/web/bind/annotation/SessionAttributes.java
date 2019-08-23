@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 import org.springframework.core.annotation.AliasFor;
 
 /**
- * Annotation that indicates the session attributes that a specific handler uses.
+ * 注释，指示特定处理程序使用的会话属性。
  *
  * <p>This will typically list the names of model attributes which should be
  * transparently stored in the session or some conversational storage,

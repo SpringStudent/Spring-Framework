@@ -19,8 +19,8 @@ package org.springframework.context.i18n;
 import java.util.Locale;
 
 /**
- * Simple implementation of the {@link LocaleContext} interface,
- * always returning a specified {@code Locale}.
+ *  简单实现{@link LocaleContext}接口，
+ * 总是返回指定的{@code Locale}。
  *
  * @author Juergen Hoeller
  * @since 1.2

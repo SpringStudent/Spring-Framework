@@ -150,7 +150,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	private static final String INIT_PARAM_DELIMITERS = ",; \t\n";
 
 
-	/** Checking for Servlet 3.0+ HttpServletResponse.getStatus() */
+	/** 检查Servlet 3.0+ HttpServletResponse.getStatus（） */
 	private static final boolean responseGetStatusAvailable =
 			ClassUtils.hasMethod(HttpServletResponse.class, "getStatus");
 
@@ -180,10 +180,10 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	/** 我们应该将上下文作为ServletContext属性发布吗？ */
 	private boolean publishContext = true;
 
-	/** Should we publish a ServletRequestHandledEvent at the end of each request? */
+	/**  我们应该在每个请求结束时发布ServletRequestHandledEvent吗？*/
 	private boolean publishEvents = true;
 
-	/** Expose LocaleContext and RequestAttributes as inheritable for child threads? */
+	/** 将LocaleContext和RequestAttributes公开为子线程可继承？*/
 	private boolean threadContextInheritable = false;
 
 	/** Should we dispatch an HTTP OPTIONS request to {@link #doService}? */
@@ -952,28 +952,32 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	}
 
 	/**
-	 * Process this request, publishing an event regardless of the outcome.
-	 * <p>The actual event handling is performed by the abstract
-	 * {@link #doService} template method.
+	 * 处理此请求，无论结果如何都发布事件。
+	 * <p>实际的事件处理由{@link #doService}模板方法执行。
 	 */
 	protected final void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		//记录当前时间
 		long startTime = System.currentTimeMillis();
 		Throwable failureCause = null;
-
+		//返回当前线程的LocaleContext
 		LocaleContext previousLocaleContext = LocaleContextHolder.getLocaleContext();
+		//构建当前语言环境的上下文
 		LocaleContext localeContext = buildLocaleContext(request);
-
+		//返回当前线程绑定的RequestAttributes
 		RequestAttributes previousAttributes = RequestContextHolder.getRequestAttributes();
 		ServletRequestAttributes requestAttributes = buildRequestAttributes(request, response, previousAttributes);
-
+		//获取request请求的WebAsyncManager或者new一个
 		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
 		asyncManager.registerCallableInterceptor(FrameworkServlet.class.getName(), new RequestBindingInterceptor());
-
+		//绑定localeContext和requestAttributes到当前线程上
+		//为什么绑定到当前线程上？？？
+		//在spring mvc中，为了随时都能取到当前请求的request对象，可以通过RequestContextHolder
+		// 的静态方法getRequestAttributes()获取Request相关的变量，如request, response等。
+		// LocaleContext当然效果同理
 		initContextHolders(request, localeContext, requestAttributes);
-
 		try {
+			//委托DipsatcherServlet实现
 			doService(request, response);
 		}
 		catch (ServletException ex) {
@@ -990,6 +994,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 		}
 
 		finally {
+			//重新绑定之前的localeContext和requestAttributes到线程上
 			resetContextHolders(request, previousLocaleContext, previousAttributes);
 			if (requestAttributes != null) {
 				requestAttributes.requestCompleted();
@@ -1014,8 +1019,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	}
 
 	/**
-	 * Build a LocaleContext for the given request, exposing the request's
-	 * primary locale as current locale.
+	 * 为给定的请求构建LocaleContext，公开请求主要语言环境作为当前语言环境。
 	 * @param request current HTTP request
 	 * @return the corresponding LocaleContext, or {@code null} if none to bind
 	 * @see LocaleContextHolder#setLocaleContext
@@ -1025,9 +1029,9 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	}
 
 	/**
-	 * Build ServletRequestAttributes for the given request (potentially also
-	 * holding a reference to the response), taking pre-bound attributes
-	 * (and their type) into consideration.
+	 *
+	 * 为给定的请求构建ServletRequestAttributes(可能持有response的引用)
+	 * 考虑预先绑定的属性（及其类型）。
 	 * @param request current HTTP request
 	 * @param response current HTTP response
 	 * @param previousAttributes pre-bound RequestAttributes instance, if any
@@ -1072,11 +1076,13 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 
 	private void publishRequestHandledEvent(
 			HttpServletRequest request, HttpServletResponse response, long startTime, Throwable failureCause) {
-
+		//请求结束后发布个事件
 		if (this.publishEvents) {
 			// Whether or not we succeeded, publish an event.
 			long processingTime = System.currentTimeMillis() - startTime;
+			// 获取状态码
 			int statusCode = (responseGetStatusAvailable ? response.getStatus() : -1);
+			// 发布事件
 			this.webApplicationContext.publishEvent(
 					new ServletRequestHandledEvent(this,
 							request.getRequestURI(), request.getRemoteAddr(),
@@ -1101,12 +1107,9 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 
 
 	/**
-	 * Subclasses must implement this method to do the work of request handling,
-	 * receiving a centralized callback for GET, POST, PUT and DELETE.
-	 * <p>The contract is essentially the same as that for the commonly overridden
-	 * {@code doGet} or {@code doPost} methods of HttpServlet.
-	 * <p>This class intercepts calls to ensure that exception handling and
-	 * event publication takes place.
+	 * 子类必须实现此方法来执行请求处理，接收GET，POST，PUT和DELETE的集中回调。
+	 * <p>该契约基本上与HttpServlet的常被覆盖的{@code doGet}或{@code doPost}方法相同。
+	 * <p>捕获该方法的异常确保 拦截器回调和 事件发布 成功
 	 * @param request current HTTP request
 	 * @param response current HTTP response
 	 * @throws Exception in case of any kind of processing failure

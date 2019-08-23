@@ -74,7 +74,7 @@ public abstract class RequestContextHolder  {
 	}
 
 	/**
-	 * Bind the given RequestAttributes to the current thread.
+	 * 将给定的RequestAttributes绑定到当前线程。
 	 * @param attributes the RequestAttributes to expose,
 	 * or {@code null} to reset the thread-bound context
 	 * @param inheritable whether to expose the RequestAttributes as inheritable
@@ -97,7 +97,7 @@ public abstract class RequestContextHolder  {
 	}
 
 	/**
-	 * Return the RequestAttributes currently bound to the thread.
+	 * 返回当前绑定到该线程的RequestAttributes。
 	 * @return the RequestAttributes currently bound to the thread,
 	 * or {@code null} if none bound
 	 */

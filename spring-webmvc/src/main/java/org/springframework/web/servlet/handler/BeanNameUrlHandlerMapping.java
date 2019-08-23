@@ -47,7 +47,7 @@ import org.springframework.util.StringUtils;
 public class BeanNameUrlHandlerMapping extends AbstractDetectingUrlHandlerMapping {
 
 	/**
-	 * Checks name and aliases of the given bean for URLs, starting with "/".
+	 * 检查URL的给定bean的名称和别名，以“/”开头。
 	 */
 	@Override
 	protected String[] determineUrlsForHandler(String beanName) {
@@ -55,12 +55,14 @@ public class BeanNameUrlHandlerMapping extends AbstractDetectingUrlHandlerMappin
 		if (beanName.startsWith("/")) {
 			urls.add(beanName);
 		}
+		//获取bean的别名
 		String[] aliases = getApplicationContext().getAliases(beanName);
 		for (String alias : aliases) {
 			if (alias.startsWith("/")) {
 				urls.add(alias);
 			}
 		}
+		//获取给定beanName的所有urls
 		return StringUtils.toStringArray(urls);
 	}
 
