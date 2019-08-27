@@ -17,12 +17,10 @@
 package org.springframework.web.context.request;
 
 /**
- * Abstraction for accessing attribute objects associated with a request.
- * Supports access to request-scoped attributes as well as to session-scoped
- * attributes, with the optional notion of a "global session".
+ * 用于访问与请求关联的属性对象的抽象。
+ * 支持访问请求范围的属性以及会话范围的属性，具有“全局会话”的可选概念。
  *
- * <p>Can be implemented for any kind of request/session mechanism,
- * in particular for servlet requests and portlet requests.
+ * <p>可以为任何类型的请求/会话机制实现，特别是对于servlet请求和portlet请求。
  *
  * @author Juergen Hoeller
  * @since 2.0

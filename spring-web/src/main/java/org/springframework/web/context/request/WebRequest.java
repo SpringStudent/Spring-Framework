@@ -22,10 +22,10 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Generic interface for a web request. Mainly intended for generic web
- * request interceptors, giving them access to general request metadata,
- * not for actual handling of the request.
  *
+ * Web请求的通用接口。 主要用于通用Web
+ * 请求拦截器，让他们访问一般请求元数据，
+ * 不是为了实际处理请求。
  * @author Juergen Hoeller
  * @author Brian Clozel
  * @since 2.0

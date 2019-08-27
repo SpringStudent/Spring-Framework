@@ -104,21 +104,24 @@ public final class ModelFactory {
 		Map<String, ?> sessionAttributes = this.sessionAttributesHandler.retrieveAttributes(request);
 		// 将@SessionAttribute声明的参数封装到ModelAndViewContainer中
 		container.mergeAttributes(sessionAttributes);
+		//调用@ModelAttributeMethod方法谢谢
 		invokeModelAttributeMethods(request, container);
-
 		for (String name : findSessionAttributeArguments(handlerMethod)) {
+			//当前handlerMethod的container的model属性不包含name,添加进去
 			if (!container.containsAttribute(name)) {
+				//获取到当前attributeName对应在session中的值
 				Object value = this.sessionAttributesHandler.retrieveAttribute(request, name);
 				if (value == null) {
 					throw new HttpSessionRequiredException("Expected session attribute '" + name + "'", name);
 				}
+				//添加到模型的属性中
 				container.addAttribute(name, value);
 			}
 		}
 	}
 
 	/**
-	 * 调用模型属性方法以填充模型。 仅当模型中尚未存在属性时才添加属性。
+	 * 调用模型属性方法以填充model。 仅当模型中尚未存在属性时才添加model。
 	 */
 	private void invokeModelAttributeMethods(NativeWebRequest request, ModelAndViewContainer container)
 			throws Exception {
@@ -153,6 +156,7 @@ public final class ModelFactory {
 	}
 
 	private ModelMethod getNextModelMethod(ModelAndViewContainer container) {
+		//遍历modelModethods 并删除不需要的modelMethod
 		for (ModelMethod modelMethod : this.modelMethods) {
 			if (modelMethod.checkDependencies(container)) {
 				if (logger.isTraceEnabled()) {
@@ -173,10 +177,14 @@ public final class ModelFactory {
 
 	/**
 	 * Find {@code @ModelAttribute} arguments also listed as {@code @SessionAttributes}.
+	 *
+	 * 找到handlerMethod的那些使用{@code @ModelAttribute}的属性
 	 */
 	private List<String> findSessionAttributeArguments(HandlerMethod handlerMethod) {
 		List<String> result = new ArrayList<String>();
+		//获取处理方法的所有参数
 		for (MethodParameter parameter : handlerMethod.getMethodParameters()) {
+			//该方法有ModelAttribute方法
 			if (parameter.hasParameterAnnotation(ModelAttribute.class)) {
 				String name = getNameForParameter(parameter);
 				Class<?> paramType = parameter.getParameterType();
@@ -189,8 +197,7 @@ public final class ModelFactory {
 	}
 
 	/**
-	 * Promote model attributes listed as {@code @SessionAttributes} to the session.
-	 * Add {@link BindingResult} attributes where necessary.
+	 * 将列为{@code @SessionAttributes}的模型属性提升为会话。 必要时添加{@link BindingResult}属性。
 	 * @param request the current request
 	 * @param container contains the model to update
 	 * @throws Exception if creating BindingResult attributes fails
@@ -244,9 +251,8 @@ public final class ModelFactory {
 
 
 	/**
-	 * Derive the model attribute name for the given method parameter based on
-	 * a {@code @ModelAttribute} parameter annotation (if present) or falling
-	 * back on parameter type based conventions.
+	 * 基于{@code @ModelAttribute}参数注释（如果存在）或基于参数类型的约定，
+	 * 导出给定方法参数的模型属性名称。
 	 * @param parameter a descriptor for the method parameter
 	 * @return the derived name
 	 * @see Conventions#getVariableNameForParameter(MethodParameter)

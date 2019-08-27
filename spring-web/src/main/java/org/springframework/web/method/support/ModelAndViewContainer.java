@@ -28,10 +28,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.bind.support.SimpleSessionStatus;
 
 /**
- * Records model and view related decisions made by
- * {@link HandlerMethodArgumentResolver}s and
- * {@link HandlerMethodReturnValueHandler}s during the course of invocation of
- * a controller method.
+ * 在调用控制器方法的过程中记录由{@link HandlerMethodArgumentResolver}和
+ * {@link HandlerMethodReturnValueHandler}做出的模型和视图相关决策。
  *
  * <p>{@link #setRequestHandled}标志可用于指示已直接处理请求并且不需要视图解析。
  *

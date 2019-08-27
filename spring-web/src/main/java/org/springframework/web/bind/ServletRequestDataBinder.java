@@ -24,12 +24,10 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.util.WebUtils;
 
 /**
- * Special {@link org.springframework.validation.DataBinder} to perform data binding
- * from servlet request parameters to JavaBeans, including support for multipart files.
  *
- * <p>See the DataBinder/WebDataBinder superclasses for customization options,
- * which include specifying allowed/required fields, and registering custom
- * property editors.
+ * 特殊{@link org.springframework.validation.DataBinder}，用于执行从servlet请求参数到JavaBeans的数据绑定，
+ * 包括对多部分文件的支持。
+ * <p>请参阅DataBinder / WebDataBinder超类以获取自定义选项，其中包括指定允许/必需字段以及注册自定义属性编辑器。
  *
  * <p>Can also be used for manual data binding in custom web controllers:
  * for example, in a plain Controller implementation or in a MultiActionController

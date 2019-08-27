@@ -22,10 +22,9 @@ import java.util.Map;
 import org.springframework.util.Assert;
 
 /**
- * Abstract support class for RequestAttributes implementations,
- * offering a request completion mechanism for request-specific destruction
- * callbacks and for updating accessed session attributes.
  *
+ * RequestAttributes实现的抽象支持类，
+ * 为特定于请求的销毁回调和更新访问的会话属性提供请求完成机制。
  * @author Juergen Hoeller
  * @since 2.0
  * @see #requestCompleted()

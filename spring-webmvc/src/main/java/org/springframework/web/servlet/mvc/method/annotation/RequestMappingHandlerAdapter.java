@@ -16,20 +16,6 @@
 
 package org.springframework.web.servlet.mvc.method.annotation;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.xml.transform.Source;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.InitializingBean;
@@ -54,41 +40,15 @@ import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.support.DefaultDataBinderFactory;
-import org.springframework.web.bind.support.DefaultSessionAttributeStore;
-import org.springframework.web.bind.support.SessionAttributeStore;
-import org.springframework.web.bind.support.WebBindingInitializer;
-import org.springframework.web.bind.support.WebDataBinderFactory;
+import org.springframework.web.bind.support.*;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.context.request.async.AsyncWebRequest;
-import org.springframework.web.context.request.async.CallableProcessingInterceptor;
-import org.springframework.web.context.request.async.DeferredResultProcessingInterceptor;
-import org.springframework.web.context.request.async.WebAsyncManager;
-import org.springframework.web.context.request.async.WebAsyncTask;
-import org.springframework.web.context.request.async.WebAsyncUtils;
+import org.springframework.web.context.request.async.*;
 import org.springframework.web.method.ControllerAdviceBean;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.method.annotation.ErrorsMethodArgumentResolver;
-import org.springframework.web.method.annotation.ExpressionValueMethodArgumentResolver;
-import org.springframework.web.method.annotation.InitBinderDataBinderFactory;
-import org.springframework.web.method.annotation.MapMethodProcessor;
-import org.springframework.web.method.annotation.ModelAttributeMethodProcessor;
-import org.springframework.web.method.annotation.ModelFactory;
-import org.springframework.web.method.annotation.ModelMethodProcessor;
-import org.springframework.web.method.annotation.RequestHeaderMapMethodArgumentResolver;
-import org.springframework.web.method.annotation.RequestHeaderMethodArgumentResolver;
-import org.springframework.web.method.annotation.RequestParamMapMethodArgumentResolver;
-import org.springframework.web.method.annotation.RequestParamMethodArgumentResolver;
-import org.springframework.web.method.annotation.SessionAttributesHandler;
-import org.springframework.web.method.annotation.SessionStatusMethodArgumentResolver;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.method.support.HandlerMethodArgumentResolverComposite;
-import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
-import org.springframework.web.method.support.HandlerMethodReturnValueHandlerComposite;
-import org.springframework.web.method.support.InvocableHandlerMethod;
-import org.springframework.web.method.support.ModelAndViewContainer;
+import org.springframework.web.method.annotation.*;
+import org.springframework.web.method.support.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.annotation.ModelAndViewResolver;
@@ -96,6 +56,16 @@ import org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.util.WebUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.xml.transform.Source;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 通过{@code @RequestMapping}定义的带有方法参数和返回类型的 {@link HandlerMethod}
@@ -181,14 +151,18 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 
 	private final Map<Class<?>, SessionAttributesHandler> sessionAttributesHandlerCache =
 			new ConcurrentHashMap<Class<?>, SessionAttributesHandler>(64);
-
+	/**
+	 * 保存每个Controller中的使用@InitBinder的方法
+	 */
 	private final Map<Class<?>, Set<Method>> initBinderCache = new ConcurrentHashMap<Class<?>, Set<Method>>(64);
 	/**
 	 * 保存每个ControllerAdviceBean 的有@InitBinder注解的方法
 	 */
 	private final Map<ControllerAdviceBean, Set<Method>> initBinderAdviceCache =
 			new LinkedHashMap<ControllerAdviceBean, Set<Method>>();
-
+	/**
+	 * 保存每个Controller中的使用@ModelAttribute方法但是没有用@RequestMapping修饰的方法
+	 */
 	private final Map<Class<?>, Set<Method>> modelAttributeCache = new ConcurrentHashMap<Class<?>, Set<Method>>(64);
 	/**
 	 * 保存每个ControllerAdviceBean 的有@ModelAttribute没有@RequestMapping注解的方法
@@ -842,32 +816,35 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 	 * @since 4.2
 	 * @see #createInvocableHandlerMethod(HandlerMethod)
 	 */
-	protected ModelAndView invokeHandlerMethod(HttpServletRequest request,
+	protected ModelAndView  invokeHandlerMethod(HttpServletRequest request,
 			HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
-
+		//创建一个ServletWebRequest对象
 		ServletWebRequest webRequest = new ServletWebRequest(request, response);
 		try {
 			// 获取容器中全局配置的InitBinder和当前HandlerMethod所对应的Controller中
 			// 配置的InitBinder，用于进行参数的绑定
+			// 并创建一个WebDataBinderFactory对象
 			WebDataBinderFactory binderFactory = getDataBinderFactory(handlerMethod);
 			// 获取容器中全局配置的ModelAttribute和当前当前HandlerMethod所对应的Controller
 			// 中配置的ModelAttribute，这些配置的方法将会在目标方法调用之前进行调用
+			// 他要用binderFactory是因为他需要处理 对应处理方法的model属性
 			ModelFactory modelFactory = getModelFactory(handlerMethod, binderFactory);
 			// 将handlerMethod封装为一个ServletInvocableHandlerMethod对象，
 			// 该对象用于对当前request的整体调用流程进行了封装
 			// 比如使用WebDataBinder格式化参数 使用argumentresolvers解析参数 处理返回数据
 			ServletInvocableHandlerMethod invocableMethod = createInvocableHandlerMethod(handlerMethod);
-			//设置参数解析器
+			//设置参数解析器 解析的是handlerMethod的方法参数
  			invocableMethod.setHandlerMethodArgumentResolvers(this.argumentResolvers);
- 			//设置返回值吹了器
+ 			//设置返回值处理器
 			invocableMethod.setHandlerMethodReturnValueHandlers(this.returnValueHandlers);
-			//设置参数绑定
+			//设置用于参数绑定的factory
 			invocableMethod.setDataBinderFactory(binderFactory);
 			//设置ParameterNameDiscoverer该对象按照一定规则获取当前参数的名称
 			invocableMethod.setParameterNameDiscoverer(this.parameterNameDiscoverer);
 			//创建一个ModelAndViewContainer对象
+			//我们要将处理方法的model 和视图封装起来需要用到该类
 			ModelAndViewContainer mavContainer = new ModelAndViewContainer();
-			//添加所有闪存属性
+			//添加所有闪存属性.
 			mavContainer.addAllAttributes(RequestContextUtils.getInputFlashMap(request));
 			modelFactory.initModel(webRequest, mavContainer, invocableMethod);
 			mavContainer.setIgnoreDefaultModelOnRedirect(this.ignoreDefaultModelOnRedirect);
@@ -920,6 +897,7 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 		return new ServletInvocableHandlerMethod(handlerMethod);
 	}
 
+
 	private ModelFactory getModelFactory(HandlerMethod handlerMethod, WebDataBinderFactory binderFactory) {
 		// 这里SessionAttributeHandler的作用是声明几个属性，使其能够在多个请求之间共享，
 		// 并且其能够保证当前request返回的model中始终保有这些属性
@@ -955,6 +933,7 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 	}
 
 	private InvocableHandlerMethod createModelAttributeMethod(WebDataBinderFactory factory, Object bean, Method method) {
+		//创建解析我们的@ModelAttribute并且没有@RequestMapping注解的方法类型
 		InvocableHandlerMethod attrMethod = new InvocableHandlerMethod(bean, method);
 		attrMethod.setHandlerMethodArgumentResolvers(this.argumentResolvers);
 		attrMethod.setParameterNameDiscoverer(this.parameterNameDiscoverer);
@@ -965,7 +944,7 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 	private WebDataBinderFactory getDataBinderFactory(HandlerMethod handlerMethod) throws Exception {
 		//HandlerMethod对象的处理类类型
 		Class<?> handlerType = handlerMethod.getBeanType();
-		//方法缓存
+		//handlerMethod所对应的控制器中的所有@InitBinder方法注解的方法缓存
 		Set<Method> methods = this.initBinderCache.get(handlerType);
 		if (methods == null) {
 			// 在当前bean中查找所有标注了@InitBinder注解的方法，这里INIT_BINDER_METHODS就是一个
@@ -983,8 +962,10 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 		// public class ControllerInitBinderExample{
 		//    @InitBinder
 		// }
-		// 获取使用@ControllerAdvice进行的@InitBinder那啥
+		// 获取使用@ControllerAdvice修饰的bean中的@InitBinder方法缓存；在afterPropertiesSet()方法中找到的
 		for (Entry<ControllerAdviceBean, Set<Method>> entry : this.initBinderAdviceCache.entrySet()) {
+			//检查是否应该应用于给定的bean类型{@code @ControllerAdvice}实例。
+			//比如配置了@ControllerAdvice的扫描包路径决定可否应用
 			if (entry.getKey().isApplicableToBeanType(handlerType)) {
 				Object bean = entry.getKey().resolveBean();
 				for (Method method : entry.getValue()) {
@@ -1009,6 +990,9 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 	 * @return
 	 */
 	private InvocableHandlerMethod createInitBinderMethod(Object bean, Method method) {
+		//不难理解对于initBinderMethod我们需要使用initBinderArgumentResolvers解析方法method
+		//参数和使用webBindingInitializer、parameterNameDiscoverer 就像调用我们的handlerMethod
+		//的方法时也要使用这些东西一样
 		InvocableHandlerMethod binderMethod = new InvocableHandlerMethod(bean, method);
 		binderMethod.setHandlerMethodArgumentResolvers(this.initBinderArgumentResolvers);
 		binderMethod.setDataBinderFactory(new DefaultDataBinderFactory(this.webBindingInitializer));

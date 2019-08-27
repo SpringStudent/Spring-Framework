@@ -82,8 +82,7 @@ public class SessionAttributesHandler {
 	}
 
 	/**
-	 * Whether the attribute name or type match the names and types specified
-	 * via {@code @SessionAttributes} on the underlying controller.
+	 * 属性名称或类型是否与基础控制器上的{@code @SessionAttributes}指定的名称和类型相匹配。
 	 * <p>Attributes successfully resolved through this method are "remembered"
 	 * and subsequently used in {@link #retrieveAttributes(WebRequest)} and
 	 * {@link #cleanupAttributes(WebRequest)}.
@@ -118,9 +117,8 @@ public class SessionAttributesHandler {
 	}
 
 	/**
-	 * Retrieve "known" attributes from the session, i.e. attributes listed
-	 * by name in {@code @SessionAttributes} or attributes previously stored
-	 * in the model that matched by type.
+	 * 从会话中检索“已知”属性，即列出的属性
+	 *   在{@code @SessionAttributes}中按名称或先前存储在按类型匹配的模型中的属性。
 	 * @param request the current request
 	 * @return a map with handler session attributes, possibly empty
 	 */

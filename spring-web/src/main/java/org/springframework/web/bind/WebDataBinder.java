@@ -28,10 +28,9 @@ import org.springframework.validation.DataBinder;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Special {@link DataBinder} for data binding from web request parameters
- * to JavaBean objects. Designed for web environments, but not dependent on
- * the Servlet API; serves as base class for more specific DataBinder variants,
- * such as {@link org.springframework.web.bind.ServletRequestDataBinder}.
+ * 特殊的{@link DataBinder}，用于从Web请求参数到JavaBean对象的数据绑定。
+ * 专为Web环境而设计，但不依赖于Servlet API; 作为更具体的DataBinder变体的基类，
+ * 例如{@link org.springframework.web.bind.ServletRequestDataBinder}。
  *
  * <p>Includes support for field markers which address a common problem with
  * HTML checkboxes and select options: detecting that a field was part of

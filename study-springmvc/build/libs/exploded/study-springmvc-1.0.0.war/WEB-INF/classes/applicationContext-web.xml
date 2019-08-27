@@ -32,6 +32,8 @@
     </bean>
     <bean id="userController" class="org.springframework.studymvc.web.UserController"/>
     <bean id="userController2" class="org.springframework.studymvc.web.UserController2"/>
+    <bean id="modelController" class="org.springframework.studymvc.web.ModelController"/>
+    <bean id="sessionController" class="org.springframework.studymvc.web.SessionController"/>
 
     <bean id="beanNameUrlHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
     <bean name="/user.do" class="org.springframework.studymvc.web.UserController3"/>
