@@ -40,7 +40,6 @@ public class TbTestServiceImpl implements TbTestService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class,noRollbackFor = NoPermissionException.class)
     public void create(final String context) throws Exception {
         transactionTemplate.execute(new TransactionCallback<Object>() {
             @Override

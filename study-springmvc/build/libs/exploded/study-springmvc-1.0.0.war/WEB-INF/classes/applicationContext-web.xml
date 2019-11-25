@@ -6,6 +6,8 @@
 		http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 
     <mvc:annotation-driven>
+        <mvc:return-value-handlers>
+        </mvc:return-value-handlers>
     </mvc:annotation-driven>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -32,6 +34,7 @@
     </bean>
     <bean id="userController" class="org.springframework.studymvc.web.UserController"/>
     <bean id="userController2" class="org.springframework.studymvc.web.UserController2"/>
+    <bean id="pathVariableController" class="org.springframework.studymvc.web.PathVariableController"/>
     <bean id="modelController" class="org.springframework.studymvc.web.ModelController"/>
     <bean id="sessionController" class="org.springframework.studymvc.web.SessionController"/>
 

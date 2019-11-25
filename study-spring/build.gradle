@@ -19,7 +19,7 @@ dependencies {
     compile(project(":spring-context-support"))
     compile(project(":spring-tx"))
     compile(project(":spring-aop"))
-    compile group: 'io.github.springstudent', name: 'GyJdbc', version: '14.0.0'
+    compile group: 'io.github.springstudent', name: 'GyJdbc', version: '19.2.0'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.42'
     compile group: 'com.alibaba', name: 'druid', version: '1.1.10'
 }
