@@ -3,6 +3,7 @@ package org.springframework.study.day17.service;
 import com.gysoft.jdbc.bean.SQL;
 import org.springframework.study.day17.dao.TbTest2Dao;
 import org.springframework.study.day17.dao.TbTest3Dao;
+import org.springframework.study.day17.pojo.TbTest2;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,14 +34,14 @@ public class TestPropagationServiceImpl implements TestPropagationService{
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void test2() throws Exception {
-        tbTest2Dao.insertWithSql(new SQL().insert("id","context").values(0,"1"));
+        tbTest2Dao.insertWithSql(new SQL().insert_into(TbTest2.class,"id","context").values(0,"1"));
 
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void test3() throws Exception {
-        tbTest3Dao.insertWithSql(new SQL().insert("id","context").values(0,"2"));
+        tbTest3Dao.insertWithSql(new SQL().insert_into(TbTest2.class,"id","context").values(0,"2"));
         System.out.println(1/0);
     }
 

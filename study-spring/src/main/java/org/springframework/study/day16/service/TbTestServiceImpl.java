@@ -2,6 +2,7 @@ package org.springframework.study.day16.service;
 
 import com.gysoft.jdbc.bean.SQL;
 import org.springframework.study.day16.dao.TbTestDao;
+import org.springframework.study.day16.pojo.TbTest;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
@@ -29,13 +30,13 @@ public class TbTestServiceImpl implements TbTestService {
 
     @Override
     public void save(String context) throws Exception {
-        tbTestDao.insertWithSql(new SQL().insert("id", "context").values(null, context));
+        tbTestDao.insertWithSql(new SQL().insert_into(TbTest.class,"id", "context").values(null, context));
         throw new RuntimeException("gun");
     }
 
     @Override
     public void insert(String context) throws Exception {
-        tbTestDao.insertWithSql(new SQL().insert("id", "context").values(null, context));
+        tbTestDao.insertWithSql(new SQL().insert_into(TbTest.class,"id", "context").values(null, context));
         throw new RuntimeException("干");
     }
 
@@ -46,7 +47,7 @@ public class TbTestServiceImpl implements TbTestService {
             public Object doInTransaction(TransactionStatus status) {
 
                 try {
-                    tbTestDao.insertWithSql(new SQL().insert("id", "context").values(null, context));
+                    tbTestDao.insertWithSql(new SQL().insert_into(TbTest.class,"id", "context").values(null, context));
                     System.out.println(1/0);
                     return null;
                 } catch (Exception e) {

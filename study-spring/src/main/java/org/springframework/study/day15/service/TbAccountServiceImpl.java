@@ -48,7 +48,7 @@ public class TbAccountServiceImpl implements  TbAccountService{
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void save(Integer id, String userName, String realName) throws Exception {
-        tbAccountDao.insertWithSql(new SQL().insert("id,userName,realName").values(id,userName,realName));
+        tbAccountDao.insertWithSql(new SQL().insert_into(TbAccount.class,"id,userName,realName").values(id,userName,realName));
         throw new Exception("哈喽");
     }
 }
